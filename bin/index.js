@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-const { exec } = require('child_process')
+const { execSync } = require('child_process')
 const { copyConfigs } = require('../commands/configs')
 
 const rawArgs = process.argv.slice(2)
 
 if (rawArgs.includes('init')) {
   copyConfigs()
-  exec('npm i dotenv express', (error, stdout, stderr) => {
+  execSync('npm i dotenv express', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       return;
