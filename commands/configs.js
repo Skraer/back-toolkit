@@ -20,7 +20,7 @@ const createTsConfig = () => {
 
   const outputRoot = path.join(process.cwd())
   const rawData = fs.readFileSync(path.join(__dirname, '../source/tsconfig.json'))
-  fs.writeFileSync(outputRoot, rawData)
+  fs.writeFileSync(outputRoot + '/tsconfig.json', rawData)
   // console.log('cwd', process.cwd());
   // console.log('dirname', __dirname);
   // console.log('filename', __filename);
