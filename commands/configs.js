@@ -16,7 +16,7 @@ const createTsConfig = () => {
   //   }
   // }
 
-  const rawData = fs.readFileSync('../source/tsconfig.json')
+  const rawData = fs.readFileSync(path.join('../source/tsconfig.json'))
   fs.writeFileSync(outputRoot, rawData)
 }
 // createStructure()
