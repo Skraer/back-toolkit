@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { exec } = require('node:child_process')
+const { exec } = require('child_process')
 const { copyConfigs } = require('../commands/configs')
 
 const rawArgs = process.argv.slice(2)
@@ -8,8 +8,8 @@ const rawArgs = process.argv.slice(2)
 if (rawArgs.includes('init')) {
   copyConfigs()
   exec('npm i dotenv express')
-} else {
-
+} else if (rawArgs.includes('test')) {
+  console.log('test');
 }
 
 process.exit()
