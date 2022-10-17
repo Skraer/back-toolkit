@@ -3,8 +3,8 @@ const path = require('path')
 // const rawData = require('../source/tsconfig.json')
 // const { source } = require('./paths')
 // const rawData = fs.readFileSync(path.join('..', 'source', 'tsconfig.json'))
-const config = require('../source/tsconfig.json')
-const rawData = fs.readFileSync(config)
+// const config = require('../source/tsconfig.json')
+// const rawData = fs.readFileSync(config)
 
 const createTsConfig = () => {
   // const srcDir = source.toString()
@@ -19,11 +19,13 @@ const createTsConfig = () => {
   //   }
   // }
 
-  const outputRoot = path.join(process.cwd())
-  fs.writeFileSync(outputRoot, rawData)
+  // const outputRoot = path.join(process.cwd())
+  // fs.writeFileSync(outputRoot, rawData)
+  console.log('cwd', process.cwd());
+  console.log('dirname', __dirname);
+  console.log('filename', __filename);
+  // console.log('execPath', process.execPath);
 }
 // createStructure()
-
+// createTsConfig()
 exports.createTsConfig = createTsConfig
-
-// module.exports = createStructure
