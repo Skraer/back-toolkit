@@ -3,7 +3,8 @@ const path = require('path')
 // const rawData = require('../source/tsconfig.json')
 // const { source } = require('./paths')
 // const rawData = fs.readFileSync(path.join('..', 'source', 'tsconfig.json'))
-const rawData = fs.readFileSync('..\\source\\tsconfig.json')
+const config = require('../source/tsconfig.json')
+const rawData = fs.readFileSync(config)
 
 const createTsConfig = () => {
   // const srcDir = source.toString()
