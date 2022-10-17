@@ -1,8 +1,15 @@
 #!/usr/bin/env node
 
-// const fs = require('fs')
+const { exec } = require('node:child_process')
+const { copyConfigs } = require('../commands/configs')
 
-// const main = require('../index.js')
-const { createTsConfig } = require('../commands/configs')
+const rawArgs = process.argv.slice(2)
 
-createTsConfig()
+if (rawArgs.includes('init')) {
+  copyConfigs()
+  exec('npm i dotenv express')
+} else {
+
+}
+
+process.exit()
