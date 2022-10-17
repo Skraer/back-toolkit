@@ -1,7 +1,6 @@
 const fs = require('fs')
 const path = require('path')
 // const { source } = require('./paths')
-const outputRoot = path.join(process.cwd())
 
 const createTsConfig = () => {
   // const srcDir = source.toString()
@@ -16,7 +15,8 @@ const createTsConfig = () => {
   //   }
   // }
 
-  const rawData = fs.readFileSync(path.join('../source/tsconfig.json'))
+  const outputRoot = path.join(process.cwd())
+  const rawData = fs.readFileSync(path.join('..', 'source', 'tsconfig.json'))
   fs.writeFileSync(outputRoot, rawData)
 }
 // createStructure()
