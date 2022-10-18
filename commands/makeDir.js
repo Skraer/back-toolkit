@@ -16,8 +16,8 @@ const makeDir = (dirPath) => {
     createDir(dirs[0])
   } else if (dirs.length > 1) {
     for (let idx = 0; idx < dirs.length; idx++) {
-      const dir = dirs[idx];
-      createDir(path.join(...dir.slice(0, idx)))
+      // const dir = dirs[idx];
+      createDir(path.join(...dirs.slice(0, idx)))
     }
   } else {
     console.error('Directory was not set');
