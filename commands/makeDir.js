@@ -3,6 +3,7 @@ const path = require('path')
 
 const makeDir = (dirPath) => {
   const dirs = dirPath.split(/\/\\/g)
+  console.log(dirs);
 
   const createDir = (dirName) => {
     if (!fs.existsSync(path.join(dirName))) {
