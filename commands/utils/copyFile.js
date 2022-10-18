@@ -2,9 +2,11 @@ const fs = require('fs')
 const path = require('path')
 
 const copyFile = (fromPath, toPath) => {
+
   const src = path.join(__dirname, '../', fromPath)
-  console.log(process.cwd());
   const output = path.join(process.cwd(), '/', toPath)
+  console.log(src);
+  console.log(output);
 
   const rawData = fs.readFileSync(path.join(src))
   // const nodemonConfig = fs.readFileSync(path.join(configPaths, 'nodemon.json'))
