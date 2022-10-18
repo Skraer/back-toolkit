@@ -8,11 +8,12 @@ const { addScripts } = require('../commands/addScripts')
 const rawArgs = process.argv.slice(2)
 
 if (rawArgs.includes('init')) {
+  installDeps(true)
+  installDeps()
   copyFile('/src/root/tsconfig.json', '/tsconfig.json')
   copyFile('/src/root/nodemon.json', '/nodemon.json')
   copyFile('/src/config.ts', '/src/config.ts')
-  installDeps(true)
-  installDeps()
+  copyFile('/src/router.ts', '/src/router.ts')
 } else if (rawArgs.includes('test')) {
   console.log('test');
 } else if (rawArgs.includes('mdir')) {
