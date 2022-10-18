@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
 const { execSync } = require('child_process')
+const { dirname } = require('path')
 const { copyConfigs } = require('../commands/configs')
+const { makeDir } = require('../commands/makeDir')
 
 const rawArgs = process.argv.slice(2)
 
@@ -17,6 +19,9 @@ if (rawArgs.includes('init')) {
   })
 } else if (rawArgs.includes('test')) {
   console.log('test');
+} else if (rawArgs.includes('mdir')) {
+  const dirName = rawArgs[rawArgs.findIndex('mdir') + 1]
+  makeDir(dirName)
 }
 
 process.exit()
