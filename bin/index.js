@@ -14,6 +14,7 @@ if (rawArgs.includes('init')) {
   copyFile('/src/root/nodemon.json', '/nodemon.json')
   copyFile('/src/config.ts', '/src/config.ts')
   copyFile('/src/router.ts', '/src/router.ts')
+  copyFile('/src/index.ts', '/src/index.ts')
 } else if (rawArgs.includes('test')) {
   console.log('test');
 } else if (rawArgs.includes('mdir')) {

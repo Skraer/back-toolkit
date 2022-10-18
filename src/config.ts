@@ -1,6 +1,8 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
+export const FRONTEND_DIR_NAME = 'path-to-frontend'
+
 export const isProd = () => {
   const args = process.argv.slice(2)
   return args.includes('-prod-db')
