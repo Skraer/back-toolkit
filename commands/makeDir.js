@@ -2,13 +2,25 @@ const fs = require('fs')
 const path = require('path')
 
 const makeDir = (dirPath) => {
-  // const srcDir = source.toString()
+  const dirs = dirPath.split(/\/\\/g)
 
-  if (!fs.existsSync(path.join(dirPath))) {
-    fs.mkdirSync(path.join(dirPath))
-  } else {
-    console.error('Same directory already exists');
+  const createDir = (dirName) => {
+    if (!fs.existsSync(path.join(dirName))) {
+      fs.mkdirSync(path.join(dirName))
+    }
   }
+
+  if (dirs.length === 1) {
+    createDir(dirs[0])
+  } else if (dirs.length > 1) {
+    for (let idx = 0; idx < dirs.length; idx++) {
+      const dir = dirs[idx];
+      createDir(path.join(...dir.slice(0, idx)))
+    }
+  } else {
+    console.error('Directory was not set');
+  }
+
   // for (let dir in source) {
   //   if (dir === 'toString') continue
   //   if (!fs.existsSync(path.join(source[dir]))) {
