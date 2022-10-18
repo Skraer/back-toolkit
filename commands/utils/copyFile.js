@@ -12,15 +12,9 @@ const copyFile = (fromPath, toPath) => {
     makeDir(dir)
   }
 
-  // makeDir(output)
-  // console.error('src: ', src);
-  // console.error('output: ', output);
-
   const rawData = fs.readFileSync(path.join(src))
-  // const nodemonConfig = fs.readFileSync(path.join(configPaths, 'nodemon.json'))
 
   fs.writeFileSync(output, rawData)
-  // fs.writeFileSync(output + 'nodemon.json', nodemonConfig)
 }
 
 exports.copyFile = copyFile
