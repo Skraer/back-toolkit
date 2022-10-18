@@ -3,6 +3,7 @@ const path = require('path')
 
 const copyFile = (fromPath, toPath) => {
   const src = path.join(__dirname, '../', fromPath)
+  console.log(process.cwd());
   const output = path.join(process.cwd(), '/', toPath)
 
   const rawData = fs.readFileSync(path.join(src))
