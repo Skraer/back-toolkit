@@ -12,9 +12,10 @@ if (rawArgs.includes('init')) {
   installDeps()
   copyFile('/src/root/tsconfig.json', '/tsconfig.json')
   copyFile('/src/root/nodemon.json', '/nodemon.json')
-  copyFile('/src/config.ts', '/src/config.ts')
-  copyFile('/src/router.ts', '/src/router.ts')
-  copyFile('/src/index.ts', '/src/index.ts')
+  copyFile('/src/config.ts')
+  copyFile('/src/router.ts')
+  copyFile('/src/index.ts')
+  copyFile('/src/controllers/interface.ts')
 } else if (rawArgs.includes('test')) {
   console.log('test');
 } else if (rawArgs.includes('mdir')) {

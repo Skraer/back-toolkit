@@ -3,6 +3,7 @@ const path = require('path')
 const { makeDir } = require('./dirMethods')
 
 const copyFile = (fromPath, toPath) => {
+  toPath = toPath || fromPath
   const src = path.join(__dirname, '../../', fromPath)
   const output = path.join(process.cwd(), '/', toPath)
 
