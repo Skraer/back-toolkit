@@ -1,12 +1,18 @@
 const fs = require('fs')
 const path = require('path')
-const { makeDir } = require('./makeDir')
+const { makeDir } = require('./dirMethods')
 
 const copyFile = (fromPath, toPath) => {
   const src = path.join(__dirname, '../../', fromPath)
   const output = path.join(process.cwd(), '/', toPath)
 
-  makeDir(output)
+  const pathArr = toPath.split(/[\/\\]/g)
+  if (pathArr.length > 1) {
+    const dir = pathArr.slice(0, pathArr.length - 1).join('/')
+    makeDir(dir)
+  }
+
+  // makeDir(output)
   // console.error('src: ', src);
   // console.error('output: ', output);
 

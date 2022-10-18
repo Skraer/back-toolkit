@@ -22,3 +22,4 @@ const makeDir = (dirPath) => {
 }
 
 exports.makeDir = makeDir
+exports.createDir = createDir

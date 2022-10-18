@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { installDeps } = require('../commands/installing')
-const { makeDir } = require('../commands/utils/makeDir')
+const { makeDir } = require('../commands/utils/dirMethods')
 const { copyFile } = require('../commands/utils/copyFile')
 
 const rawArgs = process.argv.slice(2)
