@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 
 const makeDir = (dirPath) => {
+  console.log(dirPath);
   const dirs = dirPath.split(/[\/\\]/g)
   console.log(dirs);
 
