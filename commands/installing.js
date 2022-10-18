@@ -1,6 +1,6 @@
 const { execSync } = require('child_process')
-const devPackages = ['typescript']
-const packages = ['dotenv', 'express']
+const devPackages = ['typescript', '@types/express', '@types/node', '@types/cors', 'nodemon', 'ts-node']
+const packages = ['dotenv', 'express', 'cors', 'nanoid']
 
 const installDeps = (dev = false) => {
   execSync(`npm i ${dev

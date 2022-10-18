@@ -9,7 +9,7 @@ const rawArgs = process.argv.slice(2)
 if (rawArgs.includes('init')) {
   copyFile('/src/root/tsconfig.json', '/tsconfig.json')
   copyFile('/src/root/nodemon.json', '/nodemon.json')
-  copyFile('/src/config.js', '/src/config.js')
+  copyFile('/src/config.ts', '/src/config.ts')
   installDeps(true)
   installDeps()
 } else if (rawArgs.includes('test')) {
