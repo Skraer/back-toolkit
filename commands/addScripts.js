@@ -15,7 +15,7 @@ const addScripts = () => {
       "dev": "nodemon --config nodemon.json ./src/index.ts -test-db"
     }
   }
-  fs.writeFileSync(path.join(process.cwd(), '/package.json'), resultData)
+  fs.writeFileSync(path.join(process.cwd(), '/package.json'), JSON.stringify(resultData))
 }
 
 exports.addScripts = addScripts
