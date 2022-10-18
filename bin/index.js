@@ -1,13 +1,15 @@
 #!/usr/bin/env node
 
-const { copyConfigs } = require('../commands/configs')
 const { installDeps } = require('../commands/installing')
 const { makeDir } = require('../commands/makeDir')
+const { copyFile } = require('../commands/utils/copyFile')
 
 const rawArgs = process.argv.slice(2)
 
 if (rawArgs.includes('init')) {
-  copyConfigs()
+  copyFile('/src/root/tsconfig.json', '/tsconfig.json')
+  copyFile('/src/root/nodemon.json', '/nodemon.json')
+  copyFile('/src/config.js', '/src/config.js')
   installDeps(true)
   installDeps()
 } else if (rawArgs.includes('test')) {
