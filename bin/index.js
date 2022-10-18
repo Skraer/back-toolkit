@@ -17,7 +17,7 @@ if (rawArgs.includes('init')) {
   copyFile('/src/index.ts')
   copyFile('/src/controllers/interface.ts')
 } else if (rawArgs.includes('test')) {
-  console.log('test');
+  console.log('other test');
 } else if (rawArgs.includes('mdir')) {
   const dirName = rawArgs[rawArgs.findIndex((el) => el === 'mdir') + 1]
   makeDir(dirName)
