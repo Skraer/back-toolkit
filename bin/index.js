@@ -19,10 +19,9 @@ if (rawArgs.includes('init')) {
 } else if (rawArgs.includes('test')) {
   console.log('test');
 } else if (rawArgs.includes('mdir')) {
-  console.log('mdir');
-  const dirName = rawArgs[rawArgs.findIndex('mdir') + 1]
-  console.log(dirName);
-  // makeDir(dirName)
+  const dirName = rawArgs[rawArgs.findIndex((el) => el === 'mdir') + 1]
+  // console.log(dirName);
+  makeDir(dirName)
 }
 
 process.exit()
