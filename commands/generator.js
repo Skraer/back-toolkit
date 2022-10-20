@@ -21,7 +21,8 @@ const replaceBlocksWithMongo = (textData) => {
 }
 
 const writeFileTo = (pathTo, textData) => {
-  makeDir(pathTo.split(/\/\\/g).slice(0, -1).join('/'))
+  makeDir(pathTo.split(/\/\\/g).slice(0, -1).join('/') + '/')
+  // console.log();
 
   fs.writeFileSync(
     path.join(pathTo),
