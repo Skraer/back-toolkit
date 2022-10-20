@@ -24,7 +24,9 @@ const writeFileTo = (pathTo, textData) => {
   // const dirs = 
   // makeDir(pathTo.split(/\/\\/g).slice(0, -1).join('/') + '/')
   // console.log('PATH', pathTo.split(/\/\\/g).slice(0, -1).join('/') + '/');
-  console.log(pathTo.split(/[\/\\]/g));
+  const dirs = pathTo.split(/[\/\\]/g)
+  console.log('FIRST', dirs.slice(0, -1));
+  console.log('SECOND', dirs.slice(0, dirs.length - 1));
 
   // fs.writeFileSync(
   //   path.join(pathTo),
