@@ -31,6 +31,9 @@ const generateModel = () => {
     (str, content) => replaceTemplate(str, rawArgs.includes('-mongo') ? content : '')
   )
 
+  console.log(rawArgs);
+  // console.log(resultTextData.trim());
+
   fs.writeFileSync(
     path.join(paths.execRoot, 'src', 'models', fileName),
     Buffer.from(resultTextData.trim())
