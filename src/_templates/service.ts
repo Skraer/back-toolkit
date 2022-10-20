@@ -1,9 +1,9 @@
-import { I@@TEMPLATE|T@@@@|arg=-mongo|>>@@, Post@@<<@@ } from '../models/@@TEMPLATE|T@@'
+import { I@@TEMPLATE|T@@@@|arg=-mongo|>>@@, @@TEMPLATE|T@@@@<<@@ } from '../models/@@TEMPLATE|T@@'
 
 class @@TEMPLATE|T@@Service {
   constructor() {}
 
-  async create(@@TEMPLATE|L@@Data: I@@TEMPLATE|T@@) {
+  async create(data: I@@TEMPLATE|T@@) {
     
   }
 
@@ -15,7 +15,7 @@ class @@TEMPLATE|T@@Service {
 
   }
 
-  async update(id: string, @@TEMPLATE|L@@Data: I@@TEMPLATE|T@@) {
+  async update(id: string, data: I@@TEMPLATE|T@@) {
 
   }
 

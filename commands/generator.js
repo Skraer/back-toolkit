@@ -79,6 +79,8 @@ const generateService = () => {
   //   (str, content) => replaceTemplate(str, rawArgs.includes('-mongo') ? content : '')
   // )
 
+  console.log(resultTextData);
+
   writeFileTo(
     path.join(paths.execRoot, 'src', 'services', fileName),
     resultTextData
