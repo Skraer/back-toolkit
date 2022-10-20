@@ -3,6 +3,7 @@ const path = require('path')
 const paths = require('../paths')
 const { getArgAfter } = require('../utils/getArgAfter')
 const { config, replaceTemplate } = require('../utils/template')
+const { makeDir } = require('./utils/dirMethods')
 
 const rawArgs = process.argv.slice(2)
 
@@ -20,6 +21,8 @@ const replaceBlocksWithMongo = (textData) => {
 }
 
 const writeFileTo = (pathTo, textData) => {
+  makeDir(pathTo.split(/\/\\/g).slice(0, -1).join('/'))
+
   fs.writeFileSync(
     path.join(pathTo),
     Buffer.from(textData.trim())
@@ -32,16 +35,11 @@ const generateController = () => {
 
   const textData = getTplText('controller.ts')
   let resultTextData = replaceAllTemplates(textData, name)
-  // let resultTextData = textData.replace(config.patternRegExp, (str) => replaceTemplate(str, name))
 
   writeFileTo(
     path.join(paths.execRoot, 'src', 'controllers', fileName),
     resultTextData
   )
-  // fs.writeFileSync(
-  //   path.join(paths.execRoot, 'src', 'controllers', fileName),
-  //   Buffer.from(resultTextData.trim())
-  // )
 }
 
 const generateModel = () => {
@@ -51,18 +49,12 @@ const generateModel = () => {
   const textData = getTplText('model.ts')
   let resultTextData = replaceAllTemplates(textData, name)
 
-  // let resultTextData = textData.replace(config.patternRegExp, (str) => replaceTemplate(str, name))
-
   resultTextData = replaceBlocksWithMongo(resultTextData)
 
   writeFileTo(
     path.join(paths.execRoot, 'src', 'models', fileName),
     resultTextData
   )
-  // fs.writeFileSync(
-  //   path.join(paths.execRoot, 'src', 'models', fileName),
-  //   Buffer.from(resultTextData.trim())
-  // )
 }
 
 const generateService = () => {
@@ -73,13 +65,6 @@ const generateService = () => {
   let resultTextData = replaceAllTemplates(textData, name)
 
   resultTextData = replaceBlocksWithMongo(resultTextData)
-
-  // resultTextData = resultTextData.replace(
-  //   config.patternBlockMongoRegExp,
-  //   (str, content) => replaceTemplate(str, rawArgs.includes('-mongo') ? content : '')
-  // )
-
-  console.log(resultTextData);
 
   writeFileTo(
     path.join(paths.execRoot, 'src', 'services', fileName),

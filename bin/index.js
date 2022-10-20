@@ -20,13 +20,12 @@ if (rawArgs.includes('init')) {
   copyFile('/src/router.ts')
   copyFile('/src/index.ts')
   copyFile('/src/controllers/interface.ts')
+  addScripts()
 } else if (rawArgs.includes('test')) {
   console.log(config);
 } else if (rawArgs.includes('mdir')) {
   const dirName = rawArgs[rawArgs.findIndex((el) => el === 'mdir') + 1]
   makeDir(dirName)
-} else if (rawArgs.includes('add-scripts')) {
-  addScripts()
 } else if (rawArgs.includes('gen')) {
   generate()
 }
