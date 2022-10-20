@@ -8,4 +8,10 @@ export interface I@@TEMPLATE|T@@ {
   
 })
 
+@@TEMPLATE|T@@Schema.set('toJSON', {
+  virtuals: true,
+})
+
+const @@TEMPLATE|T@@ = model('@@TEMPLATE|T@@', @@TEMPLATE|T@@Schema)
+
 export { @@TEMPLATE|T@@ }@@<<@@
