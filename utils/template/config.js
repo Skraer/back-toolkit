@@ -7,6 +7,8 @@ const config = {
   lowerCase: 'L',
   // camelCase: 'C',
   // kebabCase: 'K'
+  patternBlockRegExp: /@@>>@@([\s\S]*?)@@<<@@/gm,
+  patternBlockMongoRegExp: /@@\|arg=-mongo\|?>>@@([\s\S]*?)@@<<@@/gm,
 }
 
 module.exports = config

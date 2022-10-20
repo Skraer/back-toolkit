@@ -11,10 +11,11 @@ const generateController = () => {
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + 'Controller.ts'
 
   const textData = fs.readFileSync(path.join(paths.root, 'src', '_templates', 'controller.ts')).toString()
-  const resultTextData = textData.replace(config.patternRegExp, (str) => replaceTemplate(str, name))
+  let resultTextData = textData.replace(config.patternRegExp, (str) => replaceTemplate(str, name))
+
   fs.writeFileSync(
     path.join(paths.execRoot, 'src', 'controllers', fileName),
-    Buffer.from(resultTextData)
+    Buffer.from(resultTextData.trim())
   )
 }
 
@@ -23,10 +24,16 @@ const generateModel = () => {
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + '.ts'
 
   const textData = fs.readFileSync(path.join(paths.root, 'src', '_templates', 'model.ts')).toString()
-  const resultTextData = textData.replace(config.patternRegExp, (str) => replaceTemplate(str, name))
+  let resultTextData = textData.replace(config.patternRegExp, (str) => replaceTemplate(str, name))
+
+  resultTextData = resultTextData.replace(
+    config.patternBlockMongoRegExp,
+    (str, content) => replaceTemplate(str, rawArgs.includes('-mongo') ? content : '')
+  )
+
   fs.writeFileSync(
     path.join(paths.execRoot, 'src', 'models', fileName),
-    Buffer.from(resultTextData)
+    Buffer.from(resultTextData.trim())
   )
 }
 
