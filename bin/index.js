@@ -26,7 +26,7 @@ if (rawArgs.includes('init')) {
 } else if (rawArgs.includes('mdir')) {
   const dirName = rawArgs[rawArgs.findIndex((el) => el === 'mdir') + 1]
   makeDir(dirName)
-} else if (rawArgs.includes('gen')) {
+} else if (rawArgs.find(arg => arg.startsWith('gen'))) {
   generate()
 }
 

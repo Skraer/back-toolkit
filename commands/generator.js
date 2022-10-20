@@ -28,8 +28,7 @@ const writeFileTo = (pathTo, textData) => {
   )
 }
 
-const generateController = () => {
-  const name = getArgAfter('/c')
+const generateController = (name) => {
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + 'Controller.ts'
 
   const textData = getTplText('controller.ts')
@@ -41,8 +40,7 @@ const generateController = () => {
   )
 }
 
-const generateModel = () => {
-  const name = getArgAfter('/m')
+const generateModel = (name) => {
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + '.ts'
 
   const textData = getTplText('model.ts')
@@ -56,8 +54,7 @@ const generateModel = () => {
   )
 }
 
-const generateService = () => {
-  const name = getArgAfter('/s')
+const generateService = (name) => {
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + 'Service.ts'
 
   const textData = getTplText('service.ts')
@@ -72,14 +69,18 @@ const generateService = () => {
 }
 
 const generate = () => {
-  if (rawArgs.includes('/c')) {
-    generateController()
+  const fullArg = rawArgs.find(arg => arg.startsWith('gen'))
+  const args = fullArg.split(':')
+  const name = getArgAfter(fullArg)
+
+  if (args.includes('c')) {
+    generateController(name)
   }
-  if (rawArgs.includes('/m')) {
-    generateModel()
+  if (args.includes('m')) {
+    generateModel(name)
   }
-  if (rawArgs.includes('/s')) {
-    generateService()
+  if (args.includes('s')) {
+    generateService(name)
   }
 }
 
