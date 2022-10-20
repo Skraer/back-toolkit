@@ -66,7 +66,7 @@ const generateModel = () => {
 }
 
 const generateService = () => {
-  const name = getArgAfter('/m')
+  const name = getArgAfter('/s')
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + 'Service.ts'
 
   const textData = getTplText('service.ts')
