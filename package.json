@@ -1,6 +1,6 @@
 {
   "name": "skraer-back-toolkit",
-  "version": "0.0.72",
+  "version": "0.0.73",
   "description": "",
   "main": "index.js",
   "bin": {
