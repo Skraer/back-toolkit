@@ -1,6 +1,7 @@
 const config = require('./config')
 
 const replaceTemplate = (template, input) => {
+  console.log(template);
   const filter = template.split(config.separator)[1][0]
   switch (filter) {
     case config.lowerCase:

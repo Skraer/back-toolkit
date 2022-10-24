@@ -21,8 +21,7 @@ const replaceBlocksWithMongo = (textData) => {
 }
 
 const writeFileTo = (pathTo, textData) => {
-  console.log(pathTo);
-  // makeDir(path.join(...pathTo.split(/[\/\\]/g).slice(0, -1)))
+  makeDir(path.join(...pathTo.split(/[\/\\]/g).slice(0, -1)))
   fs.writeFileSync(
     path.join(pathTo),
     Buffer.from(textData.trim())
@@ -42,7 +41,6 @@ const generateController = (name) => {
 }
 
 const generateModel = (name) => {
-  console.log('name: ', name);
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + '.ts'
 
   const textData = getTplText('modelNew.ts')
