@@ -4,7 +4,7 @@ export interface I/* TEMPLATE|T */ {
 
 }
 
-/* TEMPLATE_BLOCK[-mongo]>> export const @TEMPLATE|T@Schema = new Schema<I@TEMPLATE|T@, Model<@TEMPLATE|T@>>({
+/* TEMPLATE_BLOCK[-mongo]>> export const @TEMPLATE|T@Schema = new Schema<I@TEMPLATE|T@, Model<I@TEMPLATE|T@>>({
 
 }) 
 
