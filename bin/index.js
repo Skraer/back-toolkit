@@ -4,8 +4,8 @@ const { installDeps } = require('../commands/installing')
 const { makeDir } = require('../commands/utils/dirMethods')
 const { copyFile } = require('../commands/utils/copyFile')
 const { addScripts } = require('../commands/addScripts')
-const { config } = require('../utils/template/config')
-const { generate } = require('../commands/generator')
+const { config } = require('../commands/generator/config')
+const generate = require('../commands/generator')
 
 // const getArgAfter = (str) => rawArgs[rawArgs.findIndex((arg) => arg === str)]
 

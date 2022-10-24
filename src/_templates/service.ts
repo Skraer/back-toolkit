@@ -1,9 +1,9 @@
-import { I@@TEMPLATE|T@@@@|arg=-mongo|>>@@, @@TEMPLATE|T@@@@<<@@ } from '../models/@@TEMPLATE|T@@'
+import { I/* TEMPLATE|T *//* TEMPLATE_BLOCK[-mongo]>> , @TEMPLATE|T@ */ } from '../models/@TEMPLATE|T@'
 
-class @@TEMPLATE|T@@Service {
+class /* TEMPLATE|T */Service {
   constructor() {}
 
-  async create(data: I@@TEMPLATE|T@@) {
+  async create(data: I/* TEMPLATE|T */) {
     
   }
 
@@ -15,7 +15,7 @@ class @@TEMPLATE|T@@Service {
 
   }
 
-  async update(id: string, data: I@@TEMPLATE|T@@) {
+  async update(id: string, data: I/* TEMPLATE|T */) {
 
   }
 
@@ -24,6 +24,6 @@ class @@TEMPLATE|T@@Service {
   }
 }
 
-const @@TEMPLATE|L@@Service = new @@TEMPLATE|T@@Service()
+const /* TEMPLATE|L */Service = new /* TEMPLATE|T */Service()
 
-export default @@TEMPLATE|L@@Service
+export default /* TEMPLATE|L */Service
