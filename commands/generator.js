@@ -11,11 +11,11 @@ const getTplText = (fileName) =>
   fs.readFileSync(path.join(paths.root, 'src', '_templates', fileName)).toString()
 
 const replaceAllTemplates = (textData, input) =>
-  textData.replace(config.patternRegExp, (str) => replaceTemplate(str, input))
+  textData.replace(config.patternNew, (str) => replaceTemplate(str, input))
 
 const replaceBlocksWithMongo = (textData) => {
   return textData.replace(
-    config.patternBlockMongoRegExp,
+    config.patternBlockNew,
     (str, content) => replaceTemplate(str, rawArgs.includes('-mongo') ? content : '')
   )
 }
@@ -43,7 +43,7 @@ const generateController = (name) => {
 const generateModel = (name) => {
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + '.ts'
 
-  const textData = getTplText('model.ts')
+  const textData = getTplText('modelNew.ts')
   let resultTextData = replaceAllTemplates(textData, name)
 
   resultTextData = replaceBlocksWithMongo(resultTextData)
