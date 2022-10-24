@@ -51,6 +51,9 @@ const getFileName = (name, postfix) => {
   if (typeof postfix !== 'string') {
     throw new Error('Postfix must be a string')
   }
+  if (name.length <= 1) {
+    throw new Error('Name must have at least 2 chars')
+  }
   return name[0].toUpperCase() + name.slice(1).toLowerCase() + postfix
 }
 

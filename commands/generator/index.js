@@ -29,6 +29,11 @@ const generate = () => {
     outputDirName = 'services'
     outputPostfix = 'Service.ts'
   }
+  if (args.includes('mw')) {
+    templateFileName = 'middleware.ts'
+    outputDirName = 'middlewares'
+    outputPostfix = 'Middleware.ts'
+  }
 
   let textData = getTplText(templateFileName)
   textData = expandBlocksWithArg(textData)
