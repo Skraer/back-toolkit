@@ -42,6 +42,7 @@ const generateController = (name) => {
 }
 
 const generateModel = (name) => {
+  console.log('name: ', name);
   const fileName = name[0].toUpperCase() + name.slice(1).toLowerCase() + '.ts'
 
   const textData = getTplText('modelNew.ts')
