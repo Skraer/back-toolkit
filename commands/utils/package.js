@@ -1,4 +1,4 @@
-export const getInstalledPackages = () => {
+const getInstalledPackages = () => {
   let arr = []
   require('child_process').exec(
     'npm ls --json',
@@ -11,3 +11,5 @@ export const getInstalledPackages = () => {
   )
   return arr
 }
+
+exports.getInstalledPackages = getInstalledPackages
