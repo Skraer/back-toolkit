@@ -30,11 +30,11 @@ if (rawArgs.includes('init')) {
 } else if (rawArgs.find(arg => arg.startsWith('gen'))) {
   generate()
 } else if (rawArgs.includes('check-pkg')) {
-  // const packages = getInstalledPackages()
-  // console.log('PACKAGES', packages)
-  getInstalledPackages().then(packages => {
-    console.log('PACKAGES', packages);
-  })
+  const packages = getInstalledPackages()
+  console.log('PACKAGES', packages)
+  // getInstalledPackages().then(packages => {
+  //   console.log('PACKAGES', packages);
+  // })
 }
 
 process.exit()
