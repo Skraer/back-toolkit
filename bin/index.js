@@ -28,6 +28,9 @@ if (rawArgs.includes('init')) {
   makeDir(dirName)
 } else if (rawArgs.find(arg => arg.startsWith('gen'))) {
   generate()
+} else if (rawArgs.includes('check-pkg')) {
+  const packages = getInstalledPackages()
+  console.log('PACKAGES', packages)
 }
 
 process.exit()
