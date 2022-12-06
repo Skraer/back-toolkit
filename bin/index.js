@@ -6,6 +6,7 @@ const { copyFile } = require('../commands/utils/copyFile')
 const { addScripts } = require('../commands/addScripts')
 const { config } = require('../commands/generator/config')
 const generate = require('../commands/generator')
+const { getInstalledPackages } = require('../commands/utils/package')
 
 // const getArgAfter = (str) => rawArgs[rawArgs.findIndex((arg) => arg === str)]
 
