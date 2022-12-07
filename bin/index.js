@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
-const { installDeps } = require('../commands/installing')
+const { installDeps, getInstalledPackages } = require('../commands/installing')
 const { makeDir } = require('../commands/utils/dirMethods')
 const { copyFile } = require('../commands/utils/copyFile')
 const { addScripts } = require('../commands/addScripts')
 const { config } = require('../commands/generator/config')
 const generate = require('../commands/generator')
-const { getInstalledPackages } = require('../commands/utils/package')
 
 // const getArgAfter = (str) => rawArgs[rawArgs.findIndex((arg) => arg === str)]
 
@@ -23,11 +22,11 @@ if (rawArgs.includes('init')) {
   copyFile('/src/controllers/interface.ts')
   addScripts()
 } else if (rawArgs.includes('test')) {
-  console.log(config);
+  console.log(config)
 } else if (rawArgs.includes('mdir')) {
   const dirName = rawArgs[rawArgs.findIndex((el) => el === 'mdir') + 1]
   makeDir(dirName)
-} else if (rawArgs.find(arg => arg.startsWith('gen'))) {
+} else if (rawArgs.find((arg) => arg.startsWith('gen'))) {
   generate()
 } else if (rawArgs.includes('check-pkg')) {
   const packages = getInstalledPackages()
