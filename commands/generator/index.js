@@ -4,8 +4,16 @@ const rawArgs = process.argv.slice(2)
 
 const { getArgAfter } = require('../../utils/getArgAfter')
 
-const { getTplText, replaceAllTemplates, expandBlocksWithArg, writeFileTo, getFileName } = require('./utils')
+const {
+  getTplText,
+  replaceAllTemplates,
+  expandBlocksWithArg,
+  writeFileTo,
+  getFileName,
+} = require('./utils')
 const paths = require('../../paths')
+const { installMongoDeps } = require('../installing')
+const { copyFile } = require('../utils/copyFile')
 
 const handleTextData = (tplName, name) => {
   let textData = getTplText(tplName)
@@ -17,7 +25,12 @@ const handleTextData = (tplName, name) => {
 const generateController = (name) => {
   const textData = handleTextData('controller.ts', name)
   writeFileTo(
-    path.join(paths.execRoot, 'src', 'controllers', getFileName(name, 'Controller.ts')),
+    path.join(
+      paths.execRoot,
+      'src',
+      'controllers',
+      getFileName(name, 'Controller.ts')
+    ),
     textData
   )
 }
@@ -33,7 +46,12 @@ const generateModel = (name) => {
 const generateService = (name) => {
   const textData = handleTextData('service.ts', name)
   writeFileTo(
-    path.join(paths.execRoot, 'src', 'services', getFileName(name, 'Service.ts')),
+    path.join(
+      paths.execRoot,
+      'src',
+      'services',
+      getFileName(name, 'Service.ts')
+    ),
     textData
   )
 }
@@ -41,27 +59,44 @@ const generateService = (name) => {
 const generateMiddleware = (name) => {
   const textData = handleTextData('middleware.ts', name)
   writeFileTo(
-    path.join(paths.execRoot, 'src', 'middlewares', getFileName(name, 'Middleware.ts')),
+    path.join(
+      paths.execRoot,
+      'src',
+      'middlewares',
+      getFileName(name, 'Middleware.ts')
+    ),
     textData
   )
 }
 
+const generateModuleMongo = () => {
+  installMongoDeps()
+  copyFile('/src/services/MongoService/interface.ts', '/interface.ts')
+  copyFile('/src/services/MongoService/index.ts', '/index.ts')
+}
+
 const generate = () => {
-  const fullArg = rawArgs.find(arg => arg.startsWith('gen'))
+  const fullArg = rawArgs.find((arg) => arg.startsWith('gen'))
   const args = fullArg.split(':')
   const name = getArgAfter(fullArg)
 
-  if (args.includes('c')) {
-    generateController(name)
-  }
-  if (args.includes('m')) {
-    generateModel(name)
-  }
-  if (args.includes('s')) {
-    generateService(name)
-  }
-  if (args.includes('mw')) {
-    generateMiddleware(name)
+  if (args.includes('module')) {
+    if (args.includes('mongo')) {
+      generateModuleMongo()
+    }
+  } else {
+    if (args.includes('c')) {
+      generateController(name)
+    }
+    if (args.includes('m')) {
+      generateModel(name)
+    }
+    if (args.includes('s')) {
+      generateService(name)
+    }
+    if (args.includes('mw')) {
+      generateMiddleware(name)
+    }
   }
 }
 
