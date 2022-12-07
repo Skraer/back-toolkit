@@ -71,8 +71,8 @@ const generateMiddleware = (name) => {
 
 const generateModuleMongo = () => {
   installMongoDeps()
-  copyFile('/src/services/MongoService/interface.ts', '/interface.ts')
-  copyFile('/src/services/MongoService/index.ts', '/index.ts')
+  copyFile('/src/services/MongoService/interface.ts')
+  copyFile('/src/services/MongoService/index.ts')
 }
 
 const generate = () => {
