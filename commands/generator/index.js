@@ -75,6 +75,10 @@ const generateModuleMongo = () => {
   copyFile('/src/services/MongoService/index.ts')
 }
 
+const generate3rdParty = () => {
+  copyFile('/src/services/ThirdPartyRequestService.ts')
+}
+
 const generate = () => {
   const fullArg = rawArgs.find((arg) => arg.startsWith('gen'))
   const args = fullArg.split(':')
@@ -83,6 +87,9 @@ const generate = () => {
   if (args.includes('module')) {
     if (args.includes('mongo')) {
       generateModuleMongo()
+    }
+    if (args.includes('3rdparty')) {
+      generate3rdParty()
     }
   } else {
     if (args.includes('c')) {

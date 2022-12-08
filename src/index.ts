@@ -38,4 +38,8 @@ const startApp = async () => {
   }
 }
 
+process.on('SIGINT', () => {
+  process.exit()
+})
+
 startApp()
