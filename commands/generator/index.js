@@ -73,6 +73,7 @@ const generateModuleMongo = () => {
   installMongoDeps()
   copyFile('/src/services/MongoService/interface.ts')
   copyFile('/src/services/MongoService/index.ts')
+  copyFile('/src/models/MongoDoc.ts')
 }
 
 const generate3rdParty = () => {

@@ -7,7 +7,7 @@
 `npx skraer-back-toolkit gen:s todo` - generate service "TodoService"  
 `npx skraer-back-toolkit gen:s:c:m todo` - generate full module "todo"  
 `npx skraer-back-toolkit gen:mw todo` - generate middleware "TodoMiddleware"  
-`npx skraer-back-toolkit gen:module:mongo` - generate mongo module (only service at now)  
+`npx skraer-back-toolkit gen:module:mongo` - generate mongo module (service and model)  
 `npx skraer-back-toolkit gen:module:3rdparty` - generate 3rd party request module (only service at now)  
 
 <!-- You can add `-mongo` flag for adding some *mongo* stuff (works with models and services) -->
