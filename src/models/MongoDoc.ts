@@ -1,5 +1,5 @@
 import { ObjectId } from 'mongodb'
 
-export default interface IMongoDoc {
+export interface IMongoDoc {
   _id: ObjectId
 }
