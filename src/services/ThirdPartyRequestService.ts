@@ -3,7 +3,7 @@ import https from 'https'
 class ThirdPartyRequestService {
   constructor() {}
 
-  async get<T = any>(url: string) {
+  async get<T = any>(url: string): Promise<T> {
     return new Promise((resolve, reject) => {
       https.get(url, (result) => {
         let data: any[] = []

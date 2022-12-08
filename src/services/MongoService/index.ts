@@ -100,7 +100,7 @@ class MongoService implements IMongoService {
     return msg
   }
 
-  getCollection(collectionName: string) {
+  getCollection<T extends Document>(collectionName: string): Collection<T> {
     if (!this._client) {
       throw new Error(this.getErrorMsg('collection', 'mongo-disconnected'))
     }
@@ -109,7 +109,7 @@ class MongoService implements IMongoService {
       throw new Error(this.getErrorMsg('collection', 'db-disconnected'))
     }
 
-    return this._db.collection(collectionName)
+    return this._db.collection<T>(collectionName)
   }
 }
 
