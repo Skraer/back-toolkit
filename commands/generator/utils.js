@@ -44,19 +44,20 @@ const replaceAllTemplates = (textData, input) =>
 // }
 
 const expandBlocksWithArg = (textData) => {
+  const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
+
   return textData.replace(config.patternBlock, (str, argsT, content) => {
     let pass = true
 
-    const templateArgs = argsT
-      .replace(/[\[\]]/g, '')
-      .split(',')
-      .map((el) => el.trim())
+    const templateArgs = argsT.split(',').map((el) => el.trim())
 
-    console.log('templateArgs:', templateArgs)
-    rawArgs.forEach((arg) => {
-      if (templateArgs.includes(`!${arg}`)) {
+    templateArgs.forEach((argT) => {
+      if (argT.startsWith('!') && cliArgs.includes(argT.slice(1))) {
         pass = false
       }
+    })
+
+    cliArgs.forEach((arg) => {
       if (!templateArgs.includes(arg)) {
         pass = false
       }
