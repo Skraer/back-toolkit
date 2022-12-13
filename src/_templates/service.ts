@@ -15,7 +15,7 @@ class /* TEMPLATE|T */Service {
 
   }
 
-  async update(id: string, data: Partial</* TEMPLATE_BLOCK[-mongo]>>Omit<*/I/*TEMPLATE|T*//* TEMPLATE_BLOCK[-mongo], '_id'> */>) {
+  async update(id: string, data: Partial</* TEMPLATE_BLOCK[-mongo]>>Omit<*/I/*TEMPLATE|T*//* TEMPLATE_BLOCK[-mongo]>>, '_id'> */>) {
     
   }
 
