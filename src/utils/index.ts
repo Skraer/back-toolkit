@@ -1,7 +1,7 @@
 export class CallableString extends Function {
   [key: string]: any
 
-  constructor(obj: { [key: string]: any }) {
+  constructor(obj: { [key: string]: any; toString: () => string }) {
     super('return arguments.callee._call.apply(arguments.callee, arguments)')
 
     if (obj) {
