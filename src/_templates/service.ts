@@ -15,6 +15,10 @@ class /* TEMPLATE|T */Service {
 
   }
 
+  /* TEMPLATE_BLOCK[-mongo]>>async qwe(id: string, data: Parial<Omit<I@TEMPLATE|T@>, '_id'>*/) {
+
+  }
+
   async update(id: string, data: Partial</* TEMPLATE_BLOCK[-mongo]>>Omit<*/I/*TEMPLATE|T*//* TEMPLATE_BLOCK[-mongo]>>, '_id'> */>) {
     
   }
