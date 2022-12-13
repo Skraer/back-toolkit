@@ -47,23 +47,25 @@ const expandSwitchBlocks = (textData) => {
   const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
 
   return textData.replace(config.patternSwitch, (str, matched) => {
-    return matched.replace(config.patternSwitchItem, (str, argsT, content) => {
-      let passed = true
+    return matched
+      .replace(config.patternSwitchItem, (str, argsT, content) => {
+        let passed = true
 
-      const templateArgs = argsT.split(',').map((el) => el.trim())
+        const templateArgs = argsT.split(',').map((el) => el.trim())
 
-      templateArgs.forEach((argT) => {
-        if (argT.startsWith('!')) {
-          if (cliArgs.includes(argT.slice(1))) {
+        templateArgs.forEach((argT) => {
+          if (argT.startsWith('!')) {
+            if (cliArgs.includes(argT.slice(1))) {
+              passed = false
+            }
+          } else if (!cliArgs.includes(argT)) {
             passed = false
           }
-        } else if (!cliArgs.includes(argT)) {
-          passed = false
-        }
-      })
+        })
 
-      return passed ? content : ''
-    })
+        return passed ? content.trim() : ''
+      })
+      .trim()
   })
 }
 
