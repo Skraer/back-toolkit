@@ -53,16 +53,18 @@ const expandBlocksWithArg = (textData) => {
 
     templateArgs.forEach((argT) => {
       if (argT.startsWith('!') && cliArgs.includes(argT.slice(1))) {
+        console.log('failed 1', content)
         pass = false
       }
     })
 
     cliArgs.forEach((arg) => {
       if (!templateArgs.includes(arg)) {
+        console.log('failed 2', content)
         pass = false
       }
     })
-    console.log(`pass: ${pass}`, 'content: ' + content)
+    // console.log(`pass: ${pass}`, 'content: ' + content)
     return pass ? content : ''
   })
 }
