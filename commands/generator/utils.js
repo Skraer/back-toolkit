@@ -43,6 +43,30 @@ const replaceAllTemplates = (textData, input) =>
 //   )
 // }
 
+const expandSwitchBlocks = (textData) => {
+  const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
+
+  return textData.replace(config.patternSwitch, (str, matched) => {
+    return matched.replace(config.patternSwitchItem, (str, argsT, content) => {
+      let passed = true
+
+      const templateArgs = argsT.split(',').map((el) => el.trim())
+
+      templateArgs.forEach((argT) => {
+        if (argT.startsWith('!')) {
+          if (cliArgs.includes(argT.slice(1))) {
+            passed = false
+          }
+        } else if (!cliArgs.includes(argT)) {
+          passed = false
+        }
+      })
+
+      return passed ? content : ''
+    })
+  })
+}
+
 const expandBlocksWithArg = (textData) => {
   const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
 
@@ -61,19 +85,6 @@ const expandBlocksWithArg = (textData) => {
       }
     })
 
-    // cliArgs.forEach((arg) => {
-    //   if (!templateArgs.includes(arg)) {
-    //     console.log(' ');
-    //     console.log('>>>>>>>>>>')
-    //     console.log('failed 2. content:', content)
-    //     console.log('templateArgs:', templateArgs)
-    //     console.log('cli arg:', arg)
-    //     console.log('<<<<<<<<<<')
-    //     console.log(' ');
-    //     pass = false
-    //   }
-    // })
-    // console.log(`pass: ${pass}`, 'content: ' + content)
     return pass ? content : ''
   })
 }
@@ -95,4 +106,5 @@ exports.getTplText = getTplText
 exports.writeFileTo = writeFileTo
 exports.replaceAllTemplates = replaceAllTemplates
 exports.expandBlocksWithArg = expandBlocksWithArg
+exports.expandSwitchBlocks = expandSwitchBlocks
 exports.getFileName = getFileName

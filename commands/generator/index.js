@@ -10,6 +10,7 @@ const {
   expandBlocksWithArg,
   writeFileTo,
   getFileName,
+  expandSwitchBlocks,
 } = require('./utils')
 const paths = require('../../paths')
 const { installMongoDeps } = require('../installing')
@@ -17,6 +18,7 @@ const { copyFile } = require('../utils/copyFile')
 
 const handleTextData = (tplName, name) => {
   let textData = getTplText(tplName)
+  textData = expandSwitchBlocks(textData)
   textData = expandBlocksWithArg(textData)
   textData = replaceAllTemplates(textData, name)
   return textData
