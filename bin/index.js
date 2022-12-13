@@ -31,6 +31,8 @@ if (rawArgs.includes('init')) {
 } else if (rawArgs.includes('check-pkg')) {
   const packages = getInstalledPackages()
   console.log('PACKAGES', packages)
+} else if (rawArgs.includes('utils')) {
+  copyFile('/src/utils/')
 }
 
 process.exit()
