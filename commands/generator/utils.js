@@ -47,7 +47,7 @@ const expandBlocksWithArg = (textData) => {
   return textData.replace(config.patternBlock, (str, argsT, content) => {
     let pass = true
     const templateArgs = argsT.split(',').map((el) => el.trim())
-    console.log('templateArgs: ', templateArgs)
+    console.log('argsT:', argsT)
     rawArgs.forEach((arg) => {
       if (templateArgs.includes(`!${arg}`)) {
         pass = false
