@@ -48,7 +48,7 @@ const expandBlocksWithArg = (textData) => {
     let pass = true
 
     const templateArgs = argsT
-      .replace(/\[\]/g, '')
+      .replace(/[\[\]]/g, '')
       .split(',')
       .map((el) => el.trim())
 
