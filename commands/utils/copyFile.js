@@ -21,10 +21,8 @@ const copyFile = (fromPath, toPath) => {
 const copyDir = (fromPath, toPath) => {
   toPath = toPath || fromPath
   if (
-    !fromPath.endsWith('/') ||
-    !fromPath.endsWith('\\') ||
-    !toPath.endsWith('/') ||
-    !toPath.endsWith('\\')
+    (!fromPath.endsWith('/') || !fromPath.endsWith('\\')) &&
+    (!toPath.endsWith('/') || !toPath.endsWith('\\'))
   ) {
     // console.log(fromPath)
     // console.log(toPath)
