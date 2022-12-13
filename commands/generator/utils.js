@@ -52,21 +52,27 @@ const expandBlocksWithArg = (textData) => {
     const templateArgs = argsT.split(',').map((el) => el.trim())
 
     templateArgs.forEach((argT) => {
-      if (argT.startsWith('!') && cliArgs.includes(argT.slice(1))) {
+      if (argT.startsWith('!')) {
+        if (cliArgs.includes(argT.slice(1))) {
+          pass = false
+        }
+      } else if (!cliArgs.includes(argT)) {
         pass = false
       }
     })
 
-    cliArgs.forEach((arg) => {
-      if (!templateArgs.includes(arg)) {
-        console.log('>>>>>>>>>>')
-        console.log('failed 2', content)
-        console.log('templateArgs', templateArgs)
-        console.log('cli arg', arg)
-        console.log('<<<<<<<<<<')
-        pass = false
-      }
-    })
+    // cliArgs.forEach((arg) => {
+    //   if (!templateArgs.includes(arg)) {
+    //     console.log(' ');
+    //     console.log('>>>>>>>>>>')
+    //     console.log('failed 2. content:', content)
+    //     console.log('templateArgs:', templateArgs)
+    //     console.log('cli arg:', arg)
+    //     console.log('<<<<<<<<<<')
+    //     console.log(' ');
+    //     pass = false
+    //   }
+    // })
     // console.log(`pass: ${pass}`, 'content: ' + content)
     return pass ? content : ''
   })
