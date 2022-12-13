@@ -62,6 +62,7 @@ const expandBlocksWithArg = (textData) => {
         pass = false
       }
     })
+    console.log(`pass: ${pass}`, 'content: ' + content)
     return pass ? content : ''
   })
 }
