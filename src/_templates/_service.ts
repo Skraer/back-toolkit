@@ -1,4 +1,4 @@
-import { I/* TEMPLATE|T */ } from '../models/@TEMPLATE|T@'
+import { I/* TEMPLATE|T *//* TEMPLATE_BLOCK[-mongo]>> , @TEMPLATE|T@ */ } from '../models/@TEMPLATE|T@'
 
 class /* TEMPLATE|T */Service {
   constructor() {}
@@ -15,8 +15,8 @@ class /* TEMPLATE|T */Service {
 
   }
 
-  async update(id: string, data: /* TEMPLATE_BLOCK[-mongo]>> Partial<Omit<I@TEMPLATE|T@, '_id'>> */) {
-    
+  async update(id: string, data: I/* TEMPLATE|T */) {
+
   }
 
   async delete(id: string) {
