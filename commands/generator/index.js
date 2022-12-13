@@ -38,7 +38,7 @@ const generateController = (name) => {
 
 const generateModel = (name) => {
   const textData = handleTextData('model.ts', name)
-  writeFileTo(
+  const distPath = writeFileTo(
     path.join(paths.execRoot, 'src', 'models', getFileName(name, '.ts')),
     textData
   )
@@ -47,7 +47,7 @@ const generateModel = (name) => {
 
 const generateService = (name) => {
   const textData = handleTextData('service.ts', name)
-  writeFileTo(
+  const distPath = writeFileTo(
     path.join(
       paths.execRoot,
       'src',
@@ -61,7 +61,7 @@ const generateService = (name) => {
 
 const generateMiddleware = (name) => {
   const textData = handleTextData('middleware.ts', name)
-  writeFileTo(
+  const distPath = writeFileTo(
     path.join(
       paths.execRoot,
       'src',
