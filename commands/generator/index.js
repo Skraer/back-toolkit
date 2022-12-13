@@ -24,7 +24,7 @@ const handleTextData = (tplName, name) => {
 
 const generateController = (name) => {
   const textData = handleTextData('controller.ts', name)
-  writeFileTo(
+  const distPath = writeFileTo(
     path.join(
       paths.execRoot,
       'src',
@@ -33,6 +33,7 @@ const generateController = (name) => {
     ),
     textData
   )
+  console.log(`Controller ${name} was created in: ${distPath}`)
 }
 
 const generateModel = (name) => {
@@ -41,6 +42,7 @@ const generateModel = (name) => {
     path.join(paths.execRoot, 'src', 'models', getFileName(name, '.ts')),
     textData
   )
+  console.log(`Model ${name} was created in: ${distPath}`)
 }
 
 const generateService = (name) => {
@@ -54,6 +56,7 @@ const generateService = (name) => {
     ),
     textData
   )
+  console.log(`Service ${name} was created in: ${distPath}`)
 }
 
 const generateMiddleware = (name) => {
@@ -67,17 +70,22 @@ const generateMiddleware = (name) => {
     ),
     textData
   )
+  console.log(`Moddleware ${name} was created in: ${distPath}`)
 }
 
 const generateModuleMongo = () => {
+  const servicePath = '/src/services/MongoService'
   installMongoDeps()
-  copyFile('/src/services/MongoService/interface.ts')
-  copyFile('/src/services/MongoService/index.ts')
+  copyFile(servicePath + '/interface.ts')
+  copyFile(servicePath + '/index.ts')
   copyFile('/src/models/MongoDoc.ts')
+  console.log(`Mongo module was created in: ${servicePath}`)
 }
 
 const generate3rdParty = () => {
-  copyFile('/src/services/ThirdPartyRequestService.ts')
+  const modulePath = '/src/services/ThirdPartyRequestService.ts'
+  copyFile(modulePath)
+  console.log(`3rd party module was created in: ${modulePath}`)
 }
 
 const generate = () => {

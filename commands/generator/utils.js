@@ -25,22 +25,21 @@ const replaceTemplate = (template, input) => {
 
 const writeFileTo = (pathTo, textData) => {
   makeDir(path.join(...pathTo.split(/[\/\\]/g).slice(0, -1)))
-  fs.writeFileSync(
-    path.join(pathTo),
-    Buffer.from(textData.trim())
-  )
+  fs.writeFileSync(path.join(pathTo), Buffer.from(textData.trim()))
+  return pathTo
 }
 
 const getTplText = (fileName) =>
-  fs.readFileSync(path.join(paths.root, 'src', '_templates', fileName)).toString()
+  fs
+    .readFileSync(path.join(paths.root, 'src', '_templates', fileName))
+    .toString()
 
 const replaceAllTemplates = (textData, input) =>
   textData.replace(config.pattern, (str) => replaceTemplate(str, input))
 
 const expandBlocksWithArg = (textData) => {
-  return textData.replace(
-    config.patternBlock,
-    (str, argsT, content) => rawArgs.some((arg) => argsT.includes(arg)) ? content : ''
+  return textData.replace(config.patternBlock, (str, argsT, content) =>
+    rawArgs.some((arg) => argsT.includes(arg)) ? content : ''
   )
 }
 
