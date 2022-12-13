@@ -2,7 +2,7 @@
 
 const { installDeps, getInstalledPackages } = require('../commands/installing')
 const { makeDir } = require('../commands/utils/dirMethods')
-const { copyFile } = require('../commands/utils/copyFile')
+const { copyFile, copyDir } = require('../commands/utils/copyFile')
 const { addScripts } = require('../commands/addScripts')
 const { config } = require('../commands/generator/config')
 const generate = require('../commands/generator')
@@ -32,7 +32,7 @@ if (rawArgs.includes('init')) {
   const packages = getInstalledPackages()
   console.log('PACKAGES', packages)
 } else if (rawArgs.includes('utils')) {
-  copyFile('/src/utils/')
+  copyDir('/src/utils/')
 }
 
 process.exit()
