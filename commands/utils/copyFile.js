@@ -38,7 +38,9 @@ const copyDir = (fromPath, toPath) => {
 
   const files = fs.readdirSync(path.join(src))
   files.forEach((fileName) => {
-    const rawData = fs.readFileSync(path.join(src, fileName))
+    const fileDir = path.join(src, fileName)
+    console.log('fileDir', fileDir)
+    const rawData = fs.readFileSync(fileDir)
 
     fs.writeFileSync(output, rawData)
   })
