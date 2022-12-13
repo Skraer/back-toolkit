@@ -37,11 +37,11 @@ const getTplText = (fileName) =>
 const replaceAllTemplates = (textData, input) =>
   textData.replace(config.pattern, (str) => replaceTemplate(str, input))
 
-// const expandBlocksWithArg = (textData) => {
-//   return textData.replace(config.patternBlock, (str, argsT, content) =>
-//     rawArgs.some((arg) => argsT.includes(arg)) ? content : ''
-//   )
-// }
+const expandBlocksWithArg = (textData) => {
+  return textData.replace(config.patternBlock, (str, argsT, content) =>
+    rawArgs.some((arg) => argsT.includes(arg)) ? content : ''
+  )
+}
 
 const expandSwitchBlocks = (textData) => {
   const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
@@ -69,27 +69,27 @@ const expandSwitchBlocks = (textData) => {
   })
 }
 
-const expandBlocksWithArg = (textData) => {
-  const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
+// const expandBlocksWithArg = (textData) => {
+//   const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
 
-  return textData.replace(config.patternBlock, (str, argsT, content) => {
-    let pass = true
+//   return textData.replace(config.patternBlock, (str, argsT, content) => {
+//     let pass = true
 
-    const templateArgs = argsT.split(',').map((el) => el.trim())
+//     const templateArgs = argsT.split(',').map((el) => el.trim())
 
-    templateArgs.forEach((argT) => {
-      if (argT.startsWith('!')) {
-        if (cliArgs.includes(argT.slice(1))) {
-          pass = false
-        }
-      } else if (!cliArgs.includes(argT)) {
-        pass = false
-      }
-    })
+//     templateArgs.forEach((argT) => {
+//       if (argT.startsWith('!')) {
+//         if (cliArgs.includes(argT.slice(1))) {
+//           pass = false
+//         }
+//       } else if (!cliArgs.includes(argT)) {
+//         pass = false
+//       }
+//     })
 
-    return pass ? content : ''
-  })
-}
+//     return pass ? content : ''
+//   })
+// }
 
 const getFileName = (name, postfix) => {
   if (postfix === undefined) {
