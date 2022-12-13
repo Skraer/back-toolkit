@@ -52,7 +52,7 @@ const expandBlocksWithArg = (textData) => {
       .split(',')
       .map((el) => el.trim())
 
-    // console.log('argsT:', argsT)
+    console.log('templateArgs:', templateArgs)
     rawArgs.forEach((arg) => {
       if (templateArgs.includes(`!${arg}`)) {
         pass = false
