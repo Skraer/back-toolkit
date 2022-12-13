@@ -37,10 +37,26 @@ const getTplText = (fileName) =>
 const replaceAllTemplates = (textData, input) =>
   textData.replace(config.pattern, (str) => replaceTemplate(str, input))
 
+// const expandBlocksWithArg = (textData) => {
+//   return textData.replace(config.patternBlock, (str, argsT, content) =>
+//     rawArgs.some((arg) => argsT.includes(arg)) ? content : ''
+//   )
+// }
+
 const expandBlocksWithArg = (textData) => {
-  return textData.replace(config.patternBlock, (str, argsT, content) =>
-    rawArgs.some((arg) => argsT.includes(arg)) ? content : ''
-  )
+  return textData.replace(config.patternBlock, (str, argsT, content) => {
+    let pass = true
+    const templateArgs = argsT.split(',').map((el) => el.trim())
+    rawArgs.forEach((arg) => {
+      if (templateArgs.includes(`!${arg}`)) {
+        pass = false
+      }
+      if (!templateArgs.includes(arg)) {
+        pass = false
+      }
+    })
+    return pass ? content : ''
+  })
 }
 
 const getFileName = (name, postfix) => {
