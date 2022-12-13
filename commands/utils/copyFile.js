@@ -26,8 +26,12 @@ const copyDir = (fromPath, toPath) => {
     !toPath.endsWith('/') ||
     !toPath.endsWith('\\')
   ) {
-    console.log(fromPath)
-    console.log(toPath)
+    // console.log(fromPath)
+    // console.log(toPath)
+    console.log(fromPath.endsWith('/'))
+    console.log(fromPath.endsWith('\\'))
+    console.log(toPath.endsWith('/'))
+    console.log(toPath.endsWith('\\'))
     throw new Error('Path must be end with / or \\')
   }
 
