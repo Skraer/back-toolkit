@@ -36,7 +36,7 @@ class MongoService implements IMongoService {
       if (dbName) {
         this._dbName = dbName
       }
-      this._db = this._client.db()
+      this._db = this._client.db(this._dbName)
       return true
     } catch (e: any) {
       this._client = null
