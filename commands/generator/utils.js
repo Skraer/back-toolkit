@@ -101,7 +101,7 @@ const getFileName = (name, postfix) => {
   if (name.length <= 1) {
     throw new Error('Name must have at least 2 chars')
   }
-  return name[0].toUpperCase() + name.slice(1).toLowerCase() + postfix
+  return name[0].toUpperCase() + name.slice(1) + postfix
 }
 
 exports.getTplText = getTplText

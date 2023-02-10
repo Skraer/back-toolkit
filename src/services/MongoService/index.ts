@@ -1,4 +1,4 @@
-import { Db, MongoClient } from 'mongodb'
+import { Db, MongoClient, Collection, Document } from 'mongodb'
 import { IMongoService, MongoServiceParams } from './interface'
 
 const MONGO_ERRORS = {
