@@ -17,7 +17,7 @@ const replaceTemplate = (template, input) => {
     case config.upperCase:
       return input.toUpperCase()
     case config.titleCase:
-      return input[0].toUpperCase() + input.substr(1).toLowerCase()
+      return input[0].toUpperCase() + input.substr(1)
     default:
       return input
   }
