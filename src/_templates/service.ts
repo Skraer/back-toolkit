@@ -1,9 +1,9 @@
-import { I/* TEMPLATE|T */ } from '../models/@TEMPLATE|T@'
+import { I/* TEMPLATE|P */ } from '../models/@TEMPLATE|P@'
 
-class /* TEMPLATE|T */Service {
+class /* TEMPLATE|P */Service {
   constructor() {}
 
-  async create(data: I/* TEMPLATE|T */) {
+  async create(data: I/* TEMPLATE|P */) {
     
   }
 
@@ -16,8 +16,8 @@ class /* TEMPLATE|T */Service {
   }
 
   /* TEMPLATE_SWITCH
-  [-mongo]%async update(id: string, data: Partial<Omit<I@TEMPLATE|T@, '_id'>>) {%
-  [!-mongo]%async update(id: string, data: Partial<I@TEMPLATE|T@>) {%
+  [-mongo]%async update(id: string, data: Partial<Omit<I@TEMPLATE|P@, '_id'>>) {%
+  [!-mongo]%async update(id: string, data: Partial<I@TEMPLATE|P@>) {%
   */
 
   }
@@ -27,6 +27,6 @@ class /* TEMPLATE|T */Service {
   }
 }
 
-const /* TEMPLATE|L */Service = new /* TEMPLATE|T */Service()
+const /* TEMPLATE|C */Service = new /* TEMPLATE|P */Service()
 
-export default /* TEMPLATE|L */Service
+export default /* TEMPLATE|C */Service

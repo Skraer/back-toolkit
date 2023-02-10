@@ -15,11 +15,12 @@
 ---
 ## Tip for templating
 If you need to insert single template use:  
-`/* TEMPLATE|T */`  
+`/* TEMPLATE|P */`  
 Available flags:
-- T - TitleCase/PascalCase
-- U - UPPERCASE
+- U - UPPERCASE  
 - L - lowercase  
+- P - Firstupper (other is initial)  
+- C - fIRSTLOWER (other is initial)  
 
 Without of any flags text will be insert in file as you was wrote in command. Only first flag will be used eventually.
 
@@ -28,6 +29,6 @@ For blocks use:
 where `-argument` is flag in cli command.
 
 If you need to insert single template inside template block use this:  
-`/* TEMPLATE_BLOCK[-argument]>> some content @TEMPLATE|T@ some more content */`
+`/* TEMPLATE_BLOCK[-argument]>> some content @TEMPLATE|P@ some more content */`
 
 Also you can use `@TEMPLATE@` outside of blocks, but it's not handy, i think so.

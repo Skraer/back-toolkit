@@ -1,5 +1,5 @@
 module.exports = {
-  pattern: /(\/\*\s*|@)TEMPLATE\|?[TLU]?(\s*\*\/|@)/gm,
+  pattern: /(\/\*\s*|@)TEMPLATE\|?[ULPC]?(\s*\*\/|@)/gm,
   patternBlock: /\/\*\s*TEMPLATE_BLOCK\[(.*)\]>>\s*([\s\S]*?)\s*\*\//gm,
   // patternSwitch: /\/\*\s*TEMPLATE_SWITCH\[(.*)\]%%\*\//gm,
   patternSwitch: /\/\*\s*TEMPLATE_SWITCH([\s\S]*?)\s*\*\//gm,
@@ -7,7 +7,8 @@ module.exports = {
   patternStr: ['/* TEMPLATE */', '@TEMPLATE@'],
   patternBlockStr: '/* TEMPLATE_BLOCK[-arg]>>  */',
   separator: '|',
-  titleCase: 'T',
   upperCase: 'U',
   lowerCase: 'L',
+  firstUpper: 'P',
+  firstLower: 'C',
 }

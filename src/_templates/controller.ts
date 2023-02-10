@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import IController from './interface'
 
-class /* TEMPLATE|T */Controller implements IController {
+class /* TEMPLATE|P */Controller implements IController {
   constructor() {}
 
   async create(req: Request, res: Response) {
@@ -50,6 +50,6 @@ class /* TEMPLATE|T */Controller implements IController {
   }
 }
 
-const /* TEMPLATE|L */Controller = new /* TEMPLATE|T */Controller()
+const /* TEMPLATE|C */Controller = new /* TEMPLATE|P */Controller()
 
-export default /* TEMPLATE|L */Controller
+export default /* TEMPLATE|C */Controller

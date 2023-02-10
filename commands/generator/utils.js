@@ -16,8 +16,10 @@ const replaceTemplate = (template, input) => {
       return input.toLowerCase()
     case config.upperCase:
       return input.toUpperCase()
-    case config.titleCase:
+    case config.firstUpper:
       return input[0].toUpperCase() + input.substr(1)
+    case config.firstLower:
+      return input[0].toLowerCase() + input.substr(1)
     default:
       return input
   }
