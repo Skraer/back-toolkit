@@ -104,7 +104,6 @@ const getFileName = (name, postfix) => {
     throw new Error('Name must have at least 2 chars')
   }
   const result = name[0].toUpperCase() + name.slice(1) + postfix
-  console.log('result', result)
   return result
 }
 
