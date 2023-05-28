@@ -27,12 +27,7 @@ const handleTextData = (tplName, name) => {
 const generateController = (name) => {
   const textData = handleTextData('controller.ts', name)
   const distPath = writeFileTo(
-    path.join(
-      paths.execRoot,
-      'src',
-      'controllers',
-      getFileName(name, 'Controller.ts')
-    ),
+    path.join(paths.execRoot, 'src', 'controllers', getFileName(name, 'Controller.ts')),
     textData
   )
   console.log(`Controller ${name} was created in: ${distPath}`)
@@ -50,12 +45,7 @@ const generateModel = (name) => {
 const generateService = (name) => {
   const textData = handleTextData('service.ts', name)
   const distPath = writeFileTo(
-    path.join(
-      paths.execRoot,
-      'src',
-      'services',
-      getFileName(name, 'Service.ts')
-    ),
+    path.join(paths.execRoot, 'src', 'services', getFileName(name, 'Service.ts')),
     textData
   )
   console.log(`Service ${name} was created in: ${distPath}`)
@@ -64,12 +54,7 @@ const generateService = (name) => {
 const generateMiddleware = (name) => {
   const textData = handleTextData('middleware.ts', name)
   const distPath = writeFileTo(
-    path.join(
-      paths.execRoot,
-      'src',
-      'middlewares',
-      getFileName(name, 'Middleware.ts')
-    ),
+    path.join(paths.execRoot, 'src', 'middlewares', getFileName(name, 'Middleware.ts')),
     textData
   )
   console.log(`Moddleware ${name} was created in: ${distPath}`)

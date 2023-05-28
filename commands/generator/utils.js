@@ -32,9 +32,7 @@ const writeFileTo = (pathTo, textData) => {
 }
 
 const getTplText = (fileName) =>
-  fs
-    .readFileSync(path.join(paths.root, 'src', '_templates', fileName))
-    .toString()
+  fs.readFileSync(path.join(paths.root, 'src', '_templates', fileName)).toString()
 
 const replaceAllTemplates = (textData, input) =>
   textData.replace(config.pattern, (str) => replaceTemplate(str, input))
