@@ -1,13 +1,13 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-const { makeDir } = require('../utils/dirMethods')
-const paths = require('../../paths')
-const config = require('./config')
+import { makeDir } from '../utils/dirMethods'
+import paths from '../../paths'
+import config from './config'
 
 const rawArgs = process.argv.slice(2)
 
-const replaceTemplate = (template, input) => {
+const replaceTemplate = (template: string, input: string) => {
   const splitted = template.split(config.separator)
   const filter = splitted[1] ? splitted[1][0] : null
 
@@ -25,30 +25,30 @@ const replaceTemplate = (template, input) => {
   }
 }
 
-const writeFileTo = (pathTo, textData) => {
+export const writeFileTo = (pathTo: string, textData: string) => {
   makeDir(path.join(...pathTo.split(/[\/\\]/g).slice(0, -1)))
   fs.writeFileSync(path.join(pathTo), Buffer.from(textData.trim()))
   return pathTo
 }
 
-const getTplText = (fileName) =>
+export const getTplText = (fileName: string) =>
   fs.readFileSync(path.join(paths.root, 'src', '_templates', fileName)).toString()
 
-const replaceAllTemplates = (textData, input) =>
+export const replaceAllTemplates = (textData: string, input: string) =>
   textData.replace(config.pattern, (str) => replaceTemplate(str, input))
 
-const expandBlocksWithArg = (textData) => {
+export const expandBlocksWithArg = (textData: string) => {
   return textData.replace(config.patternBlock, (str, argsT, content) =>
     rawArgs.some((arg) => argsT.includes(arg)) ? content : ''
   )
 }
 
-const expandSwitchBlocks = (textData) => {
+export const expandSwitchBlocks = (textData: string) => {
   const cliArgs = rawArgs.map((arg) => arg.replace(/\!/g, ''))
 
-  return textData.replace(config.patternSwitch, (str, matched) => {
+  return textData.replace(config.patternSwitch, (str, matched: string) => {
     return matched
-      .replace(config.patternSwitchItem, (str, argsT, content) => {
+      .replace(config.patternSwitchItem, (str, argsT: string, content: string) => {
         let passed = true
 
         const templateArgs = argsT.split(',').map((el) => el.trim())
@@ -91,7 +91,7 @@ const expandSwitchBlocks = (textData) => {
 //   })
 // }
 
-const getFileName = (name, postfix) => {
+export const getFileName = (name: string, postfix?: string) => {
   if (postfix === undefined) {
     throw new Error('Postfix was not passed')
   }
@@ -104,10 +104,3 @@ const getFileName = (name, postfix) => {
   const result = name[0].toUpperCase() + name.slice(1) + postfix
   return result
 }
-
-exports.getTplText = getTplText
-exports.writeFileTo = writeFileTo
-exports.replaceAllTemplates = replaceAllTemplates
-exports.expandBlocksWithArg = expandBlocksWithArg
-exports.expandSwitchBlocks = expandSwitchBlocks
-exports.getFileName = getFileName

@@ -1,22 +1,22 @@
-const path = require('path')
+import path from 'path'
 
 const rawArgs = process.argv.slice(2)
 
-const { getArgAfter } = require('../../utils/getArgAfter')
+import { getArgAfter } from '../../utils/getArgAfter'
 
-const {
+import {
   getTplText,
   replaceAllTemplates,
   expandBlocksWithArg,
   writeFileTo,
   getFileName,
   expandSwitchBlocks,
-} = require('./utils')
-const paths = require('../../paths')
-const { installMongoDeps } = require('../installing')
-const { copyFile } = require('../utils/copyFile')
+} from './utils'
+import paths from '../../paths'
+import { installMongoDeps } from '../installing'
+import { copyFile } from '../utils/copyFile'
 
-const handleTextData = (tplName, name) => {
+const handleTextData = (tplName: string, name: string) => {
   let textData = getTplText(tplName)
   textData = expandSwitchBlocks(textData)
   textData = expandBlocksWithArg(textData)
@@ -24,7 +24,7 @@ const handleTextData = (tplName, name) => {
   return textData
 }
 
-const generateController = (name) => {
+const generateController = (name: string) => {
   const textData = handleTextData('controller.ts', name)
   const distPath = writeFileTo(
     path.join(paths.execRoot, 'src', 'controllers', getFileName(name, 'Controller.ts')),
@@ -33,7 +33,7 @@ const generateController = (name) => {
   console.log(`Controller ${name} was created in: ${distPath}`)
 }
 
-const generateModel = (name) => {
+const generateModel = (name: string) => {
   const textData = handleTextData('model.ts', name)
   const distPath = writeFileTo(
     path.join(paths.execRoot, 'src', 'models', getFileName(name, '.ts')),
@@ -42,7 +42,7 @@ const generateModel = (name) => {
   console.log(`Model ${name} was created in: ${distPath}`)
 }
 
-const generateService = (name) => {
+const generateService = (name: string) => {
   const textData = handleTextData('service.ts', name)
   const distPath = writeFileTo(
     path.join(paths.execRoot, 'src', 'services', getFileName(name, 'Service.ts')),
@@ -51,7 +51,7 @@ const generateService = (name) => {
   console.log(`Service ${name} was created in: ${distPath}`)
 }
 
-const generateMiddleware = (name) => {
+const generateMiddleware = (name: string) => {
   const textData = handleTextData('middleware.ts', name)
   const distPath = writeFileTo(
     path.join(paths.execRoot, 'src', 'middlewares', getFileName(name, 'Middleware.ts')),
@@ -77,30 +77,33 @@ const generate3rdParty = () => {
 
 const generate = () => {
   const fullArg = rawArgs.find((arg) => arg.startsWith('gen'))
-  const args = fullArg.split(':')
-  const name = getArgAfter(fullArg)
 
-  if (args.includes('module')) {
-    if (args.includes('mongo')) {
-      generateModuleMongo()
-    }
-    if (args.includes('3rdparty')) {
-      generate3rdParty()
-    }
-  } else {
-    if (args.includes('c')) {
-      generateController(name)
-    }
-    if (args.includes('m')) {
-      generateModel(name)
-    }
-    if (args.includes('s')) {
-      generateService(name)
-    }
-    if (args.includes('mw')) {
-      generateMiddleware(name)
+  if (fullArg) {
+    const args = fullArg.split(':')
+    const name = getArgAfter(fullArg)
+
+    if (args.includes('module')) {
+      if (args.includes('mongo')) {
+        generateModuleMongo()
+      }
+      if (args.includes('3rdparty')) {
+        generate3rdParty()
+      }
+    } else {
+      if (args.includes('c')) {
+        generateController(name)
+      }
+      if (args.includes('m')) {
+        generateModel(name)
+      }
+      if (args.includes('s')) {
+        generateService(name)
+      }
+      if (args.includes('mw')) {
+        generateMiddleware(name)
+      }
     }
   }
 }
 
-module.exports = generate
+export default generate

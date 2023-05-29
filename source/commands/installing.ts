@@ -1,4 +1,4 @@
-const { execSync } = require('child_process')
+import { execSync } from 'child_process'
 const devPackages = [
   'typescript',
   '@types/express',
@@ -10,16 +10,17 @@ const devPackages = [
 const packages = ['dotenv', 'express', 'cors', 'nanoid']
 const mongoPackages = ['mongodb']
 
-const getInstalledPackages = () => {
-  const result = execSync('npm ls --json')
+export const getInstalledPackages = () => {
+  const result = execSync('npm ls --json').toString()
   const arr = result ? Object.keys(JSON.parse(result)?.dependencies) : []
 
   return arr
 }
 
-const installDeps = (dev = false) => {
+export const installDeps = (dev = false) => {
   execSync(
     `npm i ${dev ? '--save-dev ' + devPackages.join(' ') : packages.join(' ')}`,
+    // @ts-ignore: Unreachable code error
     (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`)
@@ -31,7 +32,8 @@ const installDeps = (dev = false) => {
   )
 }
 
-const installMongoDeps = (module) => {
+export const installMongoDeps = (module?: string) => {
+  // @ts-ignore: Unreachable code error
   execSync(`npm i ${mongoPackages.join(' ')}`, (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`)
@@ -41,7 +43,3 @@ const installMongoDeps = (module) => {
     console.error(`stderr: ${stderr}`)
   })
 }
-
-exports.installDeps = installDeps
-exports.installMongoDeps = installMongoDeps
-exports.getInstalledPackages = getInstalledPackages

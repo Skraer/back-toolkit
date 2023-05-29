@@ -1,13 +1,13 @@
-const fs = require('fs')
-const path = require('path')
+import fs from 'fs'
+import path from 'path'
 
-const createDir = (dirName) => {
+export const createDir = (dirName: string) => {
   if (!fs.existsSync(path.join(dirName))) {
     fs.mkdirSync(path.join(dirName))
   }
 }
 
-const makeDir = (dirPath) => {
+export const makeDir = (dirPath: string) => {
   const dirs = dirPath.split(/[\/\\]/g)
 
   if (dirs.length === 1) {
@@ -17,9 +17,6 @@ const makeDir = (dirPath) => {
       createDir(path.join(...dirs.slice(0, idx + 1)))
     }
   } else {
-    console.error('Directory was not set');
+    console.error('Directory was not set')
   }
 }
-
-exports.makeDir = makeDir
-exports.createDir = createDir

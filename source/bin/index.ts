@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
-const { installDeps, getInstalledPackages } = require('../commands/installing')
-const { makeDir } = require('../commands/utils/dirMethods')
-const { copyFile, copyDir } = require('../commands/utils/copyFile')
-const { addScripts } = require('../commands/addScripts')
-const { config } = require('../commands/generator/config')
-const generate = require('../commands/generator')
+import { installDeps, getInstalledPackages } from '../commands/installing'
+import { makeDir } from '../commands/utils/dirMethods'
+import { copyFile, copyDir } from '../commands/utils/copyFile'
+import { addScripts } from '../commands/addScripts'
+import config from '../commands/generator/config'
+import generate from '../commands/generator'
 
 // const getArgAfter = (str) => rawArgs[rawArgs.findIndex((arg) => arg === str)]
 

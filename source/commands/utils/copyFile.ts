@@ -1,8 +1,8 @@
-const fs = require('fs')
-const path = require('path')
-const { makeDir } = require('./dirMethods')
+import fs from 'fs'
+import path from 'path'
+import { makeDir } from './dirMethods'
 
-const copyFile = (fromPath, toPath) => {
+export const copyFile = (fromPath: string, toPath?: string) => {
   toPath = toPath || fromPath
   const src = path.join(__dirname, '../../', fromPath)
   const output = path.join(process.cwd(), '/', toPath)
@@ -18,7 +18,7 @@ const copyFile = (fromPath, toPath) => {
   fs.writeFileSync(output, rawData)
 }
 
-const copyDir = (fromPath, toPath) => {
+export const copyDir = (fromPath: string, toPath?: string) => {
   toPath = toPath || fromPath
   if (
     (!fromPath.endsWith('/') && !fromPath.endsWith('\\')) ||
@@ -43,6 +43,3 @@ const copyDir = (fromPath, toPath) => {
     fs.writeFileSync(path.join(output, fileName), rawData)
   })
 }
-
-exports.copyFile = copyFile
-exports.copyDir = copyDir

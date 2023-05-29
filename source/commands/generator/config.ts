@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   pattern: /(\/\*\s*|@)TEMPLATE\|?[ULPC]?(\s*\*\/|@)/gm,
   patternBlock: /\/\*\s*TEMPLATE_BLOCK\[(.*)\]>>\s*([\s\S]*?)\s*\*\//gm,
   // patternSwitch: /\/\*\s*TEMPLATE_SWITCH\[(.*)\]%%\*\//gm,
