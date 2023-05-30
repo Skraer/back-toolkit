@@ -10,5 +10,5 @@
     "allowJs": true,
   },
   "include": ["./source"],
-  "exclude": ["node_modules", "./source/src"]
+  "exclude": ["node_modules"]
 }

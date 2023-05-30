@@ -4,40 +4,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const installing_1 = require("../commands/installing");
-const dirMethods_1 = require("../commands/utils/dirMethods");
-const copyFile_1 = require("../commands/utils/copyFile");
-const addScripts_1 = require("../commands/addScripts");
-const config_1 = __importDefault(require("../commands/generator/config"));
-const generator_1 = __importDefault(require("../commands/generator"));
-// const getArgAfter = (str) => rawArgs[rawArgs.findIndex((arg) => arg === str)]
-const rawArgs = process.argv.slice(2);
-if (rawArgs.includes('init')) {
-    (0, installing_1.installDeps)(true);
-    (0, installing_1.installDeps)();
-    (0, copyFile_1.copyFile)('/src/root/tsconfig.json', '/tsconfig.json');
-    (0, copyFile_1.copyFile)('/src/root/nodemon.json', '/nodemon.json');
-    (0, copyFile_1.copyFile)('/src/config.ts');
-    (0, copyFile_1.copyFile)('/src/router.ts');
-    (0, copyFile_1.copyFile)('/src/index.ts');
-    (0, copyFile_1.copyFile)('/src/controllers/interface.ts');
-    (0, addScripts_1.addScripts)();
+const argparser_1 = __importDefault(require("../argparser/argparser"));
+const generator_1 = require("../generator");
+const initializer_1 = require("../initializer");
+const paths_1 = __importDefault(require("../paths"));
+const makeDirs_1 = require("../utils/makeDirs");
+if (argparser_1.default.init) {
+    (0, initializer_1.installDeps)(true);
+    (0, initializer_1.installDeps)();
+    (0, generator_1.writeSimpleTemplate)('tsconfig.yaml', paths_1.default.outputDir);
+    (0, generator_1.writeSimpleTemplate)('nodemon.yaml', paths_1.default.outputDir);
+    (0, generator_1.writeSimpleTemplate)('config.yaml', paths_1.default.outputDir);
+    (0, generator_1.writeSimpleTemplate)('router.yaml', paths_1.default.outputDir);
+    (0, generator_1.writeSimpleTemplate)('index.yaml', paths_1.default.outputDir);
+    (0, generator_1.writeSimpleTemplate)('controllers/interface.yaml', paths_1.default.outputDir + '/controllers');
+    (0, initializer_1.addScripts)();
 }
-else if (rawArgs.includes('test')) {
-    console.log(config_1.default);
+if (argparser_1.default.test) {
+    console.log('some test command');
 }
-else if (rawArgs.includes('mdir')) {
-    const dirName = rawArgs[rawArgs.findIndex((el) => el === 'mdir') + 1];
-    (0, dirMethods_1.makeDir)(dirName);
+if (argparser_1.default.mdir.length) {
+    (0, makeDirs_1.makeDirs)(argparser_1.default.mdir);
 }
-else if (rawArgs.find((arg) => arg.startsWith('gen'))) {
-    (0, generator_1.default)();
+if (Object.keys(argparser_1.default.gen).length) {
+    (0, generator_1.generate)();
 }
-else if (rawArgs.includes('check-pkg')) {
-    const packages = (0, installing_1.getInstalledPackages)();
-    console.log('PACKAGES', packages);
+if (argparser_1.default.modules.includes('mongo')) {
+    (0, initializer_1.installMongoDeps)();
+    (0, generator_1.generateMongoModule)();
+    console.log('Mongo module was generated');
 }
-else if (rawArgs.includes('utils')) {
-    (0, copyFile_1.copyDir)('/src/utils/');
+if (argparser_1.default.modules.includes('3rdparty')) {
+    (0, generator_1.generate3rdPartyModule)();
+    console.log('3rd party request module was generated');
+}
+if (argparser_1.default.checkPkg) {
+    const packages = (0, initializer_1.getInstalledPackages)();
+    console.log('INSTALLED PACKAGES: ', packages);
 }
 process.exit();

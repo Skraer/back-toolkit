@@ -1,38 +1,54 @@
 #!/usr/bin/env node
 
-import { installDeps, getInstalledPackages } from '../commands/installing'
-import { makeDir } from '../commands/utils/dirMethods'
-import { copyFile, copyDir } from '../commands/utils/copyFile'
-import { addScripts } from '../commands/addScripts'
-import config from '../commands/generator/config'
-import generate from '../commands/generator'
+import args from '../argparser/argparser'
+import {
+  generate,
+  generate3rdPartyModule,
+  generateMongoModule,
+  writeSimpleTemplate,
+} from '../generator'
+import { addScripts, getInstalledPackages, installDeps, installMongoDeps } from '../initializer'
+import paths from '../paths'
+import { makeDirs } from '../utils/makeDirs'
 
-// const getArgAfter = (str) => rawArgs[rawArgs.findIndex((arg) => arg === str)]
-
-const rawArgs = process.argv.slice(2)
-
-if (rawArgs.includes('init')) {
+if (args.init) {
   installDeps(true)
   installDeps()
-  copyFile('/src/root/tsconfig.json', '/tsconfig.json')
-  copyFile('/src/root/nodemon.json', '/nodemon.json')
-  copyFile('/src/config.ts')
-  copyFile('/src/router.ts')
-  copyFile('/src/index.ts')
-  copyFile('/src/controllers/interface.ts')
+  writeSimpleTemplate('tsconfig.yaml', paths.outputDir)
+  writeSimpleTemplate('nodemon.yaml', paths.outputDir)
+  writeSimpleTemplate('config.yaml', paths.outputDir)
+  writeSimpleTemplate('router.yaml', paths.outputDir)
+  writeSimpleTemplate('index.yaml', paths.outputDir)
+  writeSimpleTemplate('controllers/interface.yaml', paths.outputDir + '/controllers')
   addScripts()
-} else if (rawArgs.includes('test')) {
-  console.log(config)
-} else if (rawArgs.includes('mdir')) {
-  const dirName = rawArgs[rawArgs.findIndex((el) => el === 'mdir') + 1]
-  makeDir(dirName)
-} else if (rawArgs.find((arg) => arg.startsWith('gen'))) {
+}
+
+if (args.test) {
+  console.log('some test command')
+}
+
+if (args.mdir.length) {
+  makeDirs(args.mdir)
+}
+
+if (Object.keys(args.gen).length) {
   generate()
-} else if (rawArgs.includes('check-pkg')) {
+}
+
+if (args.modules.includes('mongo')) {
+  installMongoDeps()
+  generateMongoModule()
+  console.log('Mongo module was generated')
+}
+
+if (args.modules.includes('3rdparty')) {
+  generate3rdPartyModule()
+  console.log('3rd party request module was generated')
+}
+
+if (args.checkPkg) {
   const packages = getInstalledPackages()
-  console.log('PACKAGES', packages)
-} else if (rawArgs.includes('utils')) {
-  copyDir('/src/utils/')
+  console.log('INSTALLED PACKAGES: ', packages)
 }
 
 process.exit()
