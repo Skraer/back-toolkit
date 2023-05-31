@@ -1,5 +1,4 @@
 "use strict";
-// const rawArgs = process.argv.slice(2)
 Object.defineProperty(exports, "__esModule", { value: true });
 const isGenValid = (elem) => ['s', 'c', 'm', 'mw'].includes(elem);
 const isModuleValid = (elem) => ['3rdparty', 'mongo', 'errh'].includes(elem);
