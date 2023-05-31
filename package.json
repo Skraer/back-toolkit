@@ -18,7 +18,7 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "pub:wip": "npm run build && git add . && git commit -m \"...\" && npm version patch && npm publish",
+    "pub:wip": "npm run build && git add . && git commit -m \"wip\" && npm version patch && npm publish",
     "test": "npm run build && node ./dist/bin/index.js init",
     "build": "tsc && npm run copy-files",
     "copy-files": "copyfiles -u 1 source/templates/**/*.* dist/"
