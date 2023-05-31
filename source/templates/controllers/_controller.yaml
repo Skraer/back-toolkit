@@ -2,6 +2,7 @@ fileName: '{{P}}Controller.ts'
 content: |
   import { Request, Response } from 'express'
   import IController from './interface'
+  {{[errh][import { handleResponseError } from './utils']}}
 
   class {{P}}Controller implements IController {
     constructor() {}
@@ -10,8 +11,8 @@ content: |
       try {
         
       } catch (e: any) {
-        console.error('Cannot create: ', e)
-        res.status(500).json(e.message)
+        {{[errh][handleResponseError(res, e, 'Cannot create: ')]}}{{[!errh][console.error('Cannot create: ', e)
+        res.status(500).json(e.message)]}}
       }
     }
 
@@ -19,8 +20,8 @@ content: |
       try {
 
       } catch (e: any) {
-        console.error('Cannot get all: ', e)
-        res.status(500).json(e.message)
+        {{[errh][handleResponseError(res, e, 'Cannot get all: ')]}}{{[!errh][console.error('Cannot create: ', e)
+        res.status(500).json(e.message)]}}
       }
     }
 
@@ -28,8 +29,8 @@ content: |
       try {
 
       } catch (e: any) {
-        console.error('Cannot get once: ', e)
-        res.status(500).json(e.message)
+        {{[errh][handleResponseError(res, e, 'Cannot get once: ')]}}{{[!errh][console.error('Cannot create: ', e)
+        res.status(500).json(e.message)]}}
       }
     }
 
@@ -37,8 +38,8 @@ content: |
       try {
 
       } catch (e: any) {
-        console.error('Cannot update: ', e)
-        res.status(500).json(e.message)
+        {{[errh][handleResponseError(res, e, 'Cannot update: ')]}}{{[!errh][console.error('Cannot create: ', e)
+        res.status(500).json(e.message)]}}
       }
     }
 
@@ -46,8 +47,8 @@ content: |
       try {
 
       } catch (e: any) {
-        console.error('Cannot delete: ', e)
-        res.status(500).json(e.message)
+        {{[errh][handleResponseError(res, e, 'Cannot delete: ')]}}{{[!errh][console.error('Cannot create: ', e)
+        res.status(500).json(e.message)]}}
       }
     }
   }

@@ -2,7 +2,7 @@
 // const rawArgs = process.argv.slice(2)
 Object.defineProperty(exports, "__esModule", { value: true });
 const isGenValid = (elem) => ['s', 'c', 'm', 'mw'].includes(elem);
-const isModuleValid = (elem) => ['3rdparty', 'mongo'].includes(elem);
+const isModuleValid = (elem) => ['3rdparty', 'mongo', 'errh'].includes(elem);
 const parseRawArgs = (rawArgs) => {
     const obj = {
         gen: {},
@@ -13,6 +13,7 @@ const parseRawArgs = (rawArgs) => {
         test: false,
         flags: {
             mongo: false,
+            errh: false,
         },
     };
     if (rawArgs.includes('mdir')) {
@@ -63,9 +64,10 @@ const parseRawArgs = (rawArgs) => {
         obj.checkPkg = true;
         rawArgs = rawArgs.filter((arg) => arg !== 'checkpkg' && arg !== 'check-pkg');
     }
-    if (rawArgs.includes('-mongo')) {
+    if (rawArgs.includes('-mongo'))
         obj.flags.mongo = true;
-    }
+    if (rawArgs.includes('-errh'))
+        obj.flags.errh = true;
     return obj;
 };
 const args = parseRawArgs(process.argv.slice(2));

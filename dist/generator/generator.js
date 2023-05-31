@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generate3rdPartyModule = exports.generateMongoModule = exports.generate = exports.writeSimpleTemplate = void 0;
+exports.generateErrorHandlerModule = exports.generate3rdPartyModule = exports.generateMongoModule = exports.generate = exports.writeSimpleTemplate = void 0;
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const js_yaml_1 = __importDefault(require("js-yaml"));
@@ -61,3 +61,9 @@ const generate3rdPartyModule = () => {
     (0, exports.writeSimpleTemplate)('services/ThirdPartyRequestService.yaml', paths_1.default.outputDir + '/services');
 };
 exports.generate3rdPartyModule = generate3rdPartyModule;
+const generateErrorHandlerModule = () => {
+    (0, exports.writeSimpleTemplate)('utils/errorHandler/dictionary.yaml', paths_1.default.outputDir + '/utils/errorHandler');
+    (0, exports.writeSimpleTemplate)('utils/errorHandler/index.yaml', paths_1.default.outputDir + '/utils/errorHandler');
+    (0, exports.writeSimpleTemplate)('controllers/utils.yaml', paths_1.default.outputDir + '/controllers');
+};
+exports.generateErrorHandlerModule = generateErrorHandlerModule;

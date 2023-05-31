@@ -1,0 +1,43 @@
+fileName: dictionary.ts
+content: |
+  enum ERRORS {
+    UNKNOWN,
+    NOT_FOUND_USER,
+    BAD_PASSWORD,
+    BAD_USER_ID,
+    BAD_LOGIN,
+    EXISTS_LOGIN,
+    NOT_FOUND_USER_DATA,
+    BAD_REFRESH_TOKEN,
+    EXPIRED_REFRESH_TOKEN,
+    BAD_ACCESS_TOKEN,
+    EXPIRED_ACCESS_TOKEN,
+    NOT_SPECIFIED_ACCESS_TOKEN
+  }
+
+  type CustomErrorDictionaryType = {
+    id: ERRORS
+    message: string
+    status: number
+  }
+
+  const getUnknownError = () => ({ id: ERRORS.UNKNOWN, message: 'Unknown error', status: 500 })
+
+  const dictionary: CustomErrorDictionaryType[] = [
+    getUnknownError(),
+    { id: ERRORS.NOT_FOUND_USER, message: 'User not found', status: 400 },
+    { id: ERRORS.BAD_PASSWORD, message: 'Password is incorrect', status: 403 },
+    { id: ERRORS.BAD_USER_ID, message: 'User ID is invalid', status: 400 },
+    { id: ERRORS.BAD_LOGIN, message: 'Login is invalid', status: 401 },
+    { id: ERRORS.EXISTS_LOGIN, message: 'User with this login already exists', status: 409 },
+    { id: ERRORS.NOT_FOUND_USER_DATA, message: 'User data was not found', status: 400 },
+    { id: ERRORS.BAD_REFRESH_TOKEN, message: 'Refresh token is invalid', status: 403 },
+    { id: ERRORS.EXPIRED_REFRESH_TOKEN, message: 'Refresh token is exprired', status: 403 },
+    { id: ERRORS.BAD_ACCESS_TOKEN, message: 'Access token is invalid', status: 403 },
+    { id: ERRORS.EXPIRED_ACCESS_TOKEN, message: 'Access token is expired', status: 403 },
+    { id: ERRORS.NOT_SPECIFIED_ACCESS_TOKEN, message: 'Access token is not specified', status: 401 },
+  ]
+
+  const dictionaryMap = new Map<ERRORS, CustomErrorDictionaryType>()
+  dictionary.forEach(err => dictionaryMap.set(err.id, err))
+  export { ERRORS, CustomErrorDictionaryType, getUnknownError, dictionaryMap }

@@ -4,6 +4,7 @@ import args from '../argparser/argparser'
 import {
   generate,
   generate3rdPartyModule,
+  generateErrorHandlerModule,
   generateMongoModule,
   writeSimpleTemplate,
 } from '../generator'
@@ -44,6 +45,11 @@ if (args.modules.includes('mongo')) {
 if (args.modules.includes('3rdparty')) {
   generate3rdPartyModule()
   console.log('3rd party request module was generated')
+}
+
+if (args.modules.includes('errh')) {
+  generateErrorHandlerModule()
+  console.log('Error handler module was generated')
 }
 
 if (args.checkPkg) {

@@ -1,0 +1,28 @@
+fileName: index.ts
+content: |
+  import { CustomErrorDictionaryType, ERRORS, dictionaryMap, getUnknownError } from './dictionary'
+  export { CustomErrorDictionaryType, ERRORS, dictionaryMap, getUnknownError }
+
+  export class CustomError extends Error {
+    type: ERRORS
+    status: number
+
+    constructor(type?: ERRORS) {
+      super()
+      type = type || ERRORS.UNKNOWN
+      const errorData = dictionaryMap.get(type) || getUnknownError()
+
+      this.type = type
+      this.status = errorData.status
+      this.message = errorData.message
+    }
+
+    static GetErrorData(type?: ERRORS): CustomErrorDictionaryType {
+      const unknown = getUnknownError()
+      return type ? dictionaryMap.get(type) || unknown : unknown
+    }
+
+    static GetUnknown(): CustomErrorDictionaryType {
+      return getUnknownError()
+    }
+  }

@@ -38,6 +38,10 @@ if (argparser_1.default.modules.includes('3rdparty')) {
     (0, generator_1.generate3rdPartyModule)();
     console.log('3rd party request module was generated');
 }
+if (argparser_1.default.modules.includes('errh')) {
+    (0, generator_1.generateErrorHandlerModule)();
+    console.log('Error handler module was generated');
+}
 if (argparser_1.default.checkPkg) {
     const packages = (0, initializer_1.getInstalledPackages)();
     console.log('INSTALLED PACKAGES: ', packages);

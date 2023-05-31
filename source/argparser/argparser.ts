@@ -1,11 +1,9 @@
-// const rawArgs = process.argv.slice(2)
-
 type GenType = 's' | 'c' | 'm' | 'mw'
-type ModuleType = '3rdparty' | 'mongo'
-export type ArgFlagType = 'mongo'
+type ModuleType = '3rdparty' | 'mongo' | 'errh'
+export type ArgFlagType = 'mongo' | 'errh'
 
 const isGenValid = (elem: string): boolean => ['s', 'c', 'm', 'mw'].includes(elem)
-const isModuleValid = (elem: string): boolean => ['3rdparty', 'mongo'].includes(elem)
+const isModuleValid = (elem: string): boolean => ['3rdparty', 'mongo', 'errh'].includes(elem)
 
 export type ArgsType = {
   init: boolean
@@ -31,6 +29,7 @@ const parseRawArgs = (rawArgs: string[]): ArgsType => {
     test: false,
     flags: {
       mongo: false,
+      errh: false,
     },
   }
 
@@ -90,9 +89,8 @@ const parseRawArgs = (rawArgs: string[]): ArgsType => {
     rawArgs = rawArgs.filter((arg) => arg !== 'checkpkg' && arg !== 'check-pkg')
   }
 
-  if (rawArgs.includes('-mongo')) {
-    obj.flags.mongo = true
-  }
+  if (rawArgs.includes('-mongo')) obj.flags.mongo = true
+  if (rawArgs.includes('-errh')) obj.flags.errh = true
 
   return obj
 }
