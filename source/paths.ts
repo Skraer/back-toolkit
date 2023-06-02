@@ -5,7 +5,7 @@ import args from './argparser/argparser'
 const paths = {
   root: __dirname,
   execRoot: process.cwd(),
-  outputDir: args.appDir || 'src',
+  outputDir: args.vars.appDir || 'src',
 }
 
 // ;['src', 'app', 'source'].forEach((dir) => {

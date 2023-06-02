@@ -1,4 +1,4 @@
-import { ArgFlagType, ArgsType } from '../argparser/argparser'
+import { ArgFlagType, ArgsType } from '../argparser'
 
 export type TemplateType = {
   fileName: string

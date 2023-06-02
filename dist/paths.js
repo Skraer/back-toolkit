@@ -7,7 +7,7 @@ const argparser_1 = __importDefault(require("./argparser/argparser"));
 const paths = {
     root: __dirname,
     execRoot: process.cwd(),
-    outputDir: argparser_1.default.appDir || 'src',
+    outputDir: argparser_1.default.vars.appDir || 'src',
 };
 // ;['src', 'app', 'source'].forEach((dir) => {
 //   if (fs.existsSync(path.join(paths.execRoot, dir))) paths.outputDir = dir
