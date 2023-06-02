@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateErrorHandlerModule = exports.generate3rdPartyModule = exports.generateMongoModule = exports.generate = exports.writeSimpleTemplate = void 0;
+exports.generateConfig = exports.generateErrorHandlerModule = exports.generate3rdPartyModule = exports.generateMongoModule = exports.generate = exports.writeSimpleTemplate = void 0;
 const path_1 = __importDefault(require("path"));
 const fs_1 = __importDefault(require("fs"));
 const js_yaml_1 = __importDefault(require("js-yaml"));
@@ -11,6 +11,7 @@ const generator_utils_1 = require("./generator.utils");
 const paths_1 = __importDefault(require("../paths"));
 const writeFileTo_1 = require("../utils/writeFileTo");
 const argparser_1 = __importDefault(require("../argparser/argparser"));
+const generateSecretKey_1 = require("../utils/generateSecretKey");
 const getTemplate = (relativePath) => {
     try {
         const splitted = relativePath.split(/\\|\//g);
@@ -67,3 +68,12 @@ const generateErrorHandlerModule = () => {
     (0, exports.writeSimpleTemplate)('controllers/utils.yaml', paths_1.default.outputDir + '/controllers');
 };
 exports.generateErrorHandlerModule = generateErrorHandlerModule;
+const generateConfig = () => {
+    const access = (0, generateSecretKey_1.generateSecretKey)();
+    const refresh = (0, generateSecretKey_1.generateSecretKey)();
+    const template = getTemplate('config.yaml');
+    let content = (0, generator_utils_1.replaceConditonalPattern)(template.content, argparser_1.default.flags);
+    content = (0, generator_utils_1.replacePattern)(content, '', { access, refresh });
+    (0, writeFileTo_1.writeFileTo)(path_1.default.join(paths_1.default.execRoot, paths_1.default.outputDir, template.fileName), content);
+};
+exports.generateConfig = generateConfig;

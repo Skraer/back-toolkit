@@ -10,18 +10,10 @@ content: |
     return args.includes('-prod-db')
   }
 
-  export const SECRET_JWT = {
-    key: 'some-secret-key',
-    num: Date.now(),
-    increment() {
-      this.num = Date.now()
-      console.log(this.num)
-    },
-    toString() {
-      const string = this.key + '-' + this.num
-      return string
-    },
-  }
+  {{[auth][export const SECRET_ACCESS_KEY = '{{access}}'
+  export const SECRET_REFRESH_KEY = '{{refresh}}'
+  export const ACCESS_EXPIRE = '30m'
+  export const REFRESH_EXPIRE = '14d']}}
 
   export const PORT = process.env.PORT || (isProd() ? 443 : 5000)
   // const { DB_USER, DB_TEST_PASS, DB_PROD_PASS } = process.env

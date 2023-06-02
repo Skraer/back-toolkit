@@ -25,9 +25,14 @@ export const config = {
   },
 }
 
-export const replacePattern = (content: string, input: string): string => {
-  return content.replace(config.pattern, (str, modifier: FilterType) => {
-    if (isFilter(modifier)) return config.filters[modifier](input)
+export const replacePattern = (
+  content: string,
+  input: string,
+  variables?: { [key: string]: string | number | boolean }
+): string => {
+  return content.replace(config.pattern, (str, inner: FilterType | string) => {
+    if (isFilter(inner)) return config.filters[inner as FilterType](input)
+    if (variables && variables[inner]) return variables[inner].toString()
     return input
   })
 }

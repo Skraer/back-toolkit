@@ -1,10 +1,11 @@
 import fs from 'fs'
 import path from 'path'
+import args from './argparser/argparser'
 
 const paths = {
   root: __dirname,
   execRoot: process.cwd(),
-  outputDir: 'src',
+  outputDir: args.appDir || 'src',
 }
 
 // ;['src', 'app', 'source'].forEach((dir) => {

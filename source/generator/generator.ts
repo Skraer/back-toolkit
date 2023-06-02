@@ -11,6 +11,7 @@ import {
 import paths from '../paths'
 import { writeFileTo } from '../utils/writeFileTo'
 import args from '../argparser/argparser'
+import { generateSecretKey } from '../utils/generateSecretKey'
 
 const getTemplate = (relativePath: string): TemplateType => {
   try {
@@ -79,4 +80,13 @@ export const generateErrorHandlerModule = () => {
   writeSimpleTemplate('utils/errorHandler/dictionary.yaml', paths.outputDir + '/utils/errorHandler')
   writeSimpleTemplate('utils/errorHandler/index.yaml', paths.outputDir + '/utils/errorHandler')
   writeSimpleTemplate('controllers/utils.yaml', paths.outputDir + '/controllers')
+}
+
+export const generateConfig = () => {
+  const access = generateSecretKey()
+  const refresh = generateSecretKey()
+  const template = getTemplate('config.yaml')
+  let content = replaceConditonalPattern(template.content, args.flags)
+  content = replacePattern(content, '', { access, refresh })
+  writeFileTo(path.join(paths.execRoot, paths.outputDir, template.fileName), content)
 }

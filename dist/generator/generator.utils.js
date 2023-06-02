@@ -19,10 +19,12 @@ exports.config = {
         C: (input) => (0, exports.toCamelCase)(input),
     },
 };
-const replacePattern = (content, input) => {
-    return content.replace(exports.config.pattern, (str, modifier) => {
-        if (isFilter(modifier))
-            return exports.config.filters[modifier](input);
+const replacePattern = (content, input, variables) => {
+    return content.replace(exports.config.pattern, (str, inner) => {
+        if (isFilter(inner))
+            return exports.config.filters[inner](input);
+        if (variables && variables[inner])
+            return variables[inner].toString();
         return input;
     });
 };

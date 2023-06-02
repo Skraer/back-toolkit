@@ -4,6 +4,7 @@ import args from '../argparser/argparser'
 import {
   generate,
   generate3rdPartyModule,
+  generateConfig,
   generateErrorHandlerModule,
   generateMongoModule,
   writeSimpleTemplate,
@@ -17,7 +18,7 @@ if (args.init) {
   installDeps()
   writeSimpleTemplate('tsconfig.yaml', paths.outputDir)
   writeSimpleTemplate('nodemon.yaml', paths.outputDir)
-  writeSimpleTemplate('config.yaml', paths.outputDir)
+  generateConfig()
   writeSimpleTemplate('router.yaml', paths.outputDir)
   writeSimpleTemplate('index.yaml', paths.outputDir)
   writeSimpleTemplate('controllers/interface.yaml', paths.outputDir + '/controllers')

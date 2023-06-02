@@ -14,7 +14,7 @@ if (argparser_1.default.init) {
     (0, initializer_1.installDeps)();
     (0, generator_1.writeSimpleTemplate)('tsconfig.yaml', paths_1.default.outputDir);
     (0, generator_1.writeSimpleTemplate)('nodemon.yaml', paths_1.default.outputDir);
-    (0, generator_1.writeSimpleTemplate)('config.yaml', paths_1.default.outputDir);
+    (0, generator_1.generateConfig)();
     (0, generator_1.writeSimpleTemplate)('router.yaml', paths_1.default.outputDir);
     (0, generator_1.writeSimpleTemplate)('index.yaml', paths_1.default.outputDir);
     (0, generator_1.writeSimpleTemplate)('controllers/interface.yaml', paths_1.default.outputDir + '/controllers');

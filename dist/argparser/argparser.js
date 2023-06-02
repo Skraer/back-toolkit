@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const isGenValid = (elem) => ['s', 'c', 'm', 'mw'].includes(elem);
-const isModuleValid = (elem) => ['3rdparty', 'mongo', 'errh'].includes(elem);
+const isModuleValid = (elem) => ['3rdparty', 'mongo', 'errh', 'auth'].includes(elem);
 const parseRawArgs = (rawArgs) => {
     const obj = {
         gen: {},
@@ -13,6 +13,7 @@ const parseRawArgs = (rawArgs) => {
         flags: {
             mongo: false,
             errh: false,
+            auth: false,
         },
     };
     if (rawArgs.includes('mdir')) {
@@ -63,10 +64,21 @@ const parseRawArgs = (rawArgs) => {
         obj.checkPkg = true;
         rawArgs = rawArgs.filter((arg) => arg !== 'checkpkg' && arg !== 'check-pkg');
     }
-    if (rawArgs.includes('-mongo'))
-        obj.flags.mongo = true;
-    if (rawArgs.includes('-errh'))
-        obj.flags.errh = true;
+    // vars
+    const appDirArg = rawArgs.find((arg) => arg.startsWith('appdir='));
+    if (appDirArg) {
+        const value = appDirArg.split('=')[1];
+        obj.appDir = value || undefined;
+        rawArgs = rawArgs.filter((arg) => !arg.startsWith('appdir='));
+    }
+    // flags
+    ;
+    Object.keys(obj.flags).forEach((flag) => {
+        if (rawArgs.includes(`-${flag}`)) {
+            obj.flags[flag] = true;
+            rawArgs = rawArgs.filter((arg) => arg !== `-${flag}`);
+        }
+    });
     return obj;
 };
 const args = parseRawArgs(process.argv.slice(2));
