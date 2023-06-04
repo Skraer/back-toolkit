@@ -4,6 +4,7 @@ import path from 'path'
 import { execSync } from 'child_process'
 import { devPackages, mongoPackages, packages } from './initializer.utils'
 import paths from '../paths'
+import { Generator, generateConfig } from '../generator'
 
 export const installDeps = (isDev = false) => {
   try {
@@ -49,4 +50,16 @@ export const addScripts = () => {
   }
   const buffer = Buffer.from(JSON.stringify(resultData, undefined, 2))
   fs.writeFileSync(path.join(process.cwd(), '/package.json'), buffer)
+}
+
+export const initFiles = () => {
+  new Generator('tsconfig.yaml').writeContent()
+  new Generator('nodemon.yaml').writeContent()
+  new Generator('router.yaml').writeContent()
+  new Generator('index.yaml').writeContent()
+  new Generator({
+    relativePath: 'controllers/interface.yaml',
+    pathTo: ['controllers'],
+  }).writeContent()
+  generateConfig()
 }

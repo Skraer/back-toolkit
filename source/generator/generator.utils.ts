@@ -11,7 +11,18 @@ const isFilter = (val: string) => ['U', 'L', 'P', 'C'].includes(val)
 export const toPascalCase = (str: string) => str[0].toUpperCase() + str.substring(1)
 export const toCamelCase = (str: string) => str[0].toLowerCase() + str.substring(1)
 
-export const config = {
+export type GenConfigType = {
+  pattern: RegExp
+  patternsConditional: {
+    outer: RegExp
+    inner: RegExp
+  }
+  filters: {
+    [key in FilterType]: (input: string) => string
+  }
+}
+
+export const generatorConfig: GenConfigType = {
   pattern: /{{([\s\S]*?)}}/gm,
   patternsConditional: {
     outer: /{{((?:\[[.\s\S]*?\])+.*?)}}/gm,
@@ -30,20 +41,20 @@ export const replacePattern = (
   input: string,
   variables?: { [key: string]: string | number | boolean }
 ): string => {
-  return content.replace(config.pattern, (str, inner: FilterType | string) => {
-    if (isFilter(inner)) return config.filters[inner as FilterType](input)
+  return content.replace(generatorConfig.pattern, (str, inner: FilterType | string) => {
+    if (isFilter(inner)) return generatorConfig.filters[inner as FilterType](input)
     if (variables && variables[inner]) return variables[inner].toString()
     return input
   })
 }
 
 export const replaceConditonalPattern = (content: string, flags: ArgsType['flags']) => {
-  content = content.replace(config.patternsConditional.outer, (str, inner: string) => {
-    const matches = inner.match(config.patternsConditional.inner)
+  return content.replace(generatorConfig.patternsConditional.outer, (str, inner: string) => {
+    const matches = inner.match(generatorConfig.patternsConditional.inner)
 
     if (matches && matches.length) {
-      const flag = matches[0].replace(config.patternsConditional.inner, (_, f) => f)
-      const value = matches[1].replace(config.patternsConditional.inner, (_, v) => v)
+      const flag = matches[0].replace(generatorConfig.patternsConditional.inner, (_, f) => f)
+      const value = matches[1].replace(generatorConfig.patternsConditional.inner, (_, v) => v)
 
       if (flag.startsWith('!')) return !flags[flag.substring(1) as ArgFlagType] ? value : ''
       else return flags[flag as ArgFlagType] ? value : ''
@@ -51,8 +62,6 @@ export const replaceConditonalPattern = (content: string, flags: ArgsType['flags
 
     return str
   })
-
-  return content
 }
 
 export type GeneratorItemType = 'model' | 'controller' | 'service' | 'middleware'

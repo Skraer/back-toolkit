@@ -4,24 +4,22 @@ import args from '../argparser/argparser'
 import {
   generate,
   generate3rdPartyModule,
-  generateConfig,
   generateErrorHandlerModule,
   generateMongoModule,
-  writeSimpleTemplate,
 } from '../generator'
-import { addScripts, getInstalledPackages, installDeps, installMongoDeps } from '../initializer'
-import paths from '../paths'
+import {
+  addScripts,
+  getInstalledPackages,
+  initFiles,
+  installDeps,
+  installMongoDeps,
+} from '../initializer'
 import { makeDirs } from '../utils/makeDirs'
 
 if (args.init) {
   installDeps(true)
   installDeps()
-  writeSimpleTemplate('tsconfig.yaml', paths.outputDir)
-  writeSimpleTemplate('nodemon.yaml', paths.outputDir)
-  generateConfig()
-  writeSimpleTemplate('router.yaml', paths.outputDir)
-  writeSimpleTemplate('index.yaml', paths.outputDir)
-  writeSimpleTemplate('controllers/interface.yaml', paths.outputDir + '/controllers')
+  initFiles()
   addScripts()
 }
 

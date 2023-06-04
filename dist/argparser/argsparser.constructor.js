@@ -71,8 +71,9 @@ class ArgsParser {
                         const elems = arg.replace('gen:', '').split(':');
                         this._gen[nextArg] = [...new Set(elems.filter((el) => (0, _1.isGenValid)(el)))];
                     }
-                    if (prevArg && prevArg.startsWith('gen:'))
-                        return currArgs.slice(idx - 1, idx + 1);
+                    if (prevArg && prevArg.startsWith('gen:')) {
+                        return [...currArgs.slice(0, idx - 1), ...currArgs.slice(idx + 1)];
+                    }
                     return [...currArgs, arg];
                 }, []);
             }
@@ -87,7 +88,7 @@ class ArgsParser {
                     if (arg.startsWith('modules:')) {
                         const elems = arg.replace('modules:', '').split(':');
                         elems.filter((el) => (0, _1.isModuleValid)(el)).forEach((m) => modulesSet.add(m));
-                        return currArgs.slice(idx, idx + 1);
+                        return [...currArgs.slice(0, idx), ...currArgs.slice(idx + 1)];
                     }
                     return [...currArgs, arg];
                 }, []);

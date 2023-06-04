@@ -14,4 +14,7 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Generator = void 0;
 __exportStar(require("./generator"), exports);
+var generator_constructor_1 = require("./generator.constructor");
+Object.defineProperty(exports, "Generator", { enumerable: true, get: function () { return generator_constructor_1.Generator; } });

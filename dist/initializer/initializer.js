@@ -3,12 +3,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addScripts = exports.installMongoDeps = exports.getInstalledPackages = exports.installDeps = void 0;
+exports.initFiles = exports.addScripts = exports.installMongoDeps = exports.getInstalledPackages = exports.installDeps = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const child_process_1 = require("child_process");
 const initializer_utils_1 = require("./initializer.utils");
 const paths_1 = __importDefault(require("../paths"));
+const generator_1 = require("../generator");
 const installDeps = (isDev = false) => {
     try {
         (0, child_process_1.execSync)(`npm i ${isDev ? '--save-dev ' + initializer_utils_1.devPackages.join(' ') : initializer_utils_1.packages.join(' ')}`);
@@ -59,3 +60,15 @@ const addScripts = () => {
     fs_1.default.writeFileSync(path_1.default.join(process.cwd(), '/package.json'), buffer);
 };
 exports.addScripts = addScripts;
+const initFiles = () => {
+    new generator_1.Generator('tsconfig.yaml').writeContent();
+    new generator_1.Generator('nodemon.yaml').writeContent();
+    new generator_1.Generator('router.yaml').writeContent();
+    new generator_1.Generator('index.yaml').writeContent();
+    new generator_1.Generator({
+        relativePath: 'controllers/interface.yaml',
+        pathTo: ['controllers'],
+    }).writeContent();
+    (0, generator_1.generateConfig)();
+};
+exports.initFiles = initFiles;

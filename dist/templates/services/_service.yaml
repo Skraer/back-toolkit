@@ -1,6 +1,7 @@
 fileName: '{{P}}Service.ts'
 content: |
   import { I{{P}} } from '../models/{{P}}'
+  {{[mongo][import { ServiceWithMongo } from './MongoService/serviceWithMongo']}}
 
   class {{P}}Service{{[mongo][ extends ServiceWithMongo<I{{P}}>]}} {
     {{[!mongo][constructor() {}]}}{{[mongo][constructor() {

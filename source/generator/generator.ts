@@ -1,92 +1,74 @@
-import path from 'path'
-import fs from 'fs'
-import yaml from 'js-yaml'
-import {
-  GeneratorItemType,
-  TemplateType,
-  replaceConditonalPattern,
-  replacePattern,
-  toPascalCase,
-} from './generator.utils'
-import paths from '../paths'
-import { writeFileTo } from '../utils/writeFileTo'
+import { GeneratorItemType } from './generator.utils'
 import args from '../argparser/argparser'
 import { generateSecretKey } from '../utils/generateSecretKey'
+import { Generator } from './generator.constructor'
 
-const getTemplate = (relativePath: string): TemplateType => {
-  try {
-    const splitted = relativePath.split(/\\|\//g)
-    const doc = yaml.load(
-      fs.readFileSync(path.join(paths.root, 'templates', ...splitted), { encoding: 'utf8' })
-    ) as TemplateType
-    return doc
-  } catch (err: any) {
-    throw new Error(`Failed parse template on path ${relativePath}. Error: ` + err)
-  }
+const generateItem = (type: GeneratorItemType, name: string) => {
+  const entity = new Generator({
+    input: name,
+    pathTo: [`${type}s`],
+    relativePath: `${type}s/_${type}.yaml`,
+  })
+    .replaceContent()
+    .writeContent()
+
+  console.log(`${entity.fileName} was generated`)
 }
-
-export const writeSimpleTemplate = (relativePath: string, pathTo: string) => {
-  const template = getTemplate(relativePath)
-  writeFileTo(path.join(paths.execRoot, pathTo, template.fileName), template.content)
-}
-
-const generator = (type: GeneratorItemType, name: string) => {
-  const template = getTemplate(`${type}s/_${type}.yaml`)
-  let content = replaceConditonalPattern(template.content, args.flags)
-  content = replacePattern(content, name)
-  writeFileTo(
-    path.join(paths.execRoot, paths.outputDir, `${type}s`, replacePattern(template.fileName, name)),
-    content
-  )
-  console.log(`${toPascalCase(type)} ${name} was generated`)
-}
-
-const generateModel = generator.bind(null, 'model')
-const generateController = generator.bind(null, 'controller')
-const generateService = generator.bind(null, 'service')
-const generateMiddleware = generator.bind(null, 'middleware')
 
 export const generate = () => {
   const { gen } = args
 
   Object.keys(gen).forEach((name) => {
-    if (gen[name].includes('m')) generateModel(name)
-    if (gen[name].includes('c')) generateController(name)
-    if (gen[name].includes('s')) generateService(name)
-    if (gen[name].includes('mw')) generateMiddleware(name)
+    if (gen[name].includes('m')) generateItem('model', name)
+    if (gen[name].includes('c')) generateItem('controller', name)
+    if (gen[name].includes('s')) generateItem('service', name)
+    if (gen[name].includes('mw')) generateItem('middleware', name)
   })
 }
 
 export const generateMongoModule = () => {
-  writeSimpleTemplate(
-    'services/MongoService/index.yaml',
-    paths.outputDir + '/services/MongoService'
-  )
-  writeSimpleTemplate(
-    'services/MongoService/interface.yaml',
-    paths.outputDir + '/services/MongoService'
-  )
-  writeSimpleTemplate(
-    'services/MongoService/serviceWithMongo.yaml',
-    paths.outputDir + '/services/MongoService'
-  )
+  new Generator({
+    relativePath: 'services/MongoService/index.yaml',
+    pathTo: ['services', 'MongoService'],
+  }).writeContent()
+
+  new Generator({
+    relativePath: 'services/MongoService/interface.yaml',
+    pathTo: ['services', 'MongoService'],
+  }).writeContent()
+
+  new Generator({
+    relativePath: 'services/MongoService/serviceWithMongo.yaml',
+    pathTo: ['services', 'MongoService'],
+  }).writeContent()
 }
 
 export const generate3rdPartyModule = () => {
-  writeSimpleTemplate('services/ThirdPartyRequestService.yaml', paths.outputDir + '/services')
+  new Generator({
+    relativePath: 'services/ThirdPartyRequestService.yaml',
+    pathTo: ['services'],
+  }).writeContent()
 }
 
 export const generateErrorHandlerModule = () => {
-  writeSimpleTemplate('utils/errorHandler/dictionary.yaml', paths.outputDir + '/utils/errorHandler')
-  writeSimpleTemplate('utils/errorHandler/index.yaml', paths.outputDir + '/utils/errorHandler')
-  writeSimpleTemplate('controllers/utils.yaml', paths.outputDir + '/controllers')
+  new Generator({
+    relativePath: 'utils/errorHandler/dictionary.yaml',
+    pathTo: ['utils', 'errorHandler'],
+  }).writeContent()
+  new Generator({
+    relativePath: 'utils/errorHandler/index.yaml',
+    pathTo: ['utils', 'errorHandler'],
+  }).writeContent()
+  new Generator({
+    relativePath: 'controllers/utils.yaml',
+    pathTo: ['controllers'],
+  }).writeContent()
 }
 
 export const generateConfig = () => {
   const access = generateSecretKey()
   const refresh = generateSecretKey()
-  const template = getTemplate('config.yaml')
-  let content = replaceConditonalPattern(template.content, args.flags)
-  content = replacePattern(content, '', { access, refresh })
-  writeFileTo(path.join(paths.execRoot, paths.outputDir, template.fileName), content)
+  new Generator({ relativePath: 'config.yaml', variables: { access, refresh } })
+    .replaceContent()
+    .writeContent()
 }

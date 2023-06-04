@@ -7,17 +7,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const argparser_1 = __importDefault(require("../argparser/argparser"));
 const generator_1 = require("../generator");
 const initializer_1 = require("../initializer");
-const paths_1 = __importDefault(require("../paths"));
 const makeDirs_1 = require("../utils/makeDirs");
 if (argparser_1.default.init) {
     (0, initializer_1.installDeps)(true);
     (0, initializer_1.installDeps)();
-    (0, generator_1.writeSimpleTemplate)('tsconfig.yaml', paths_1.default.outputDir);
-    (0, generator_1.writeSimpleTemplate)('nodemon.yaml', paths_1.default.outputDir);
-    (0, generator_1.generateConfig)();
-    (0, generator_1.writeSimpleTemplate)('router.yaml', paths_1.default.outputDir);
-    (0, generator_1.writeSimpleTemplate)('index.yaml', paths_1.default.outputDir);
-    (0, generator_1.writeSimpleTemplate)('controllers/interface.yaml', paths_1.default.outputDir + '/controllers');
+    (0, initializer_1.initFiles)();
     (0, initializer_1.addScripts)();
 }
 if (argparser_1.default.test) {

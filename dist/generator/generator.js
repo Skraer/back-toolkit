@@ -3,77 +3,76 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateConfig = exports.generateErrorHandlerModule = exports.generate3rdPartyModule = exports.generateMongoModule = exports.generate = exports.writeSimpleTemplate = void 0;
-const path_1 = __importDefault(require("path"));
-const fs_1 = __importDefault(require("fs"));
-const js_yaml_1 = __importDefault(require("js-yaml"));
-const generator_utils_1 = require("./generator.utils");
-const paths_1 = __importDefault(require("../paths"));
-const writeFileTo_1 = require("../utils/writeFileTo");
+exports.generateConfig = exports.generateErrorHandlerModule = exports.generate3rdPartyModule = exports.generateMongoModule = exports.generate = void 0;
 const argparser_1 = __importDefault(require("../argparser/argparser"));
 const generateSecretKey_1 = require("../utils/generateSecretKey");
-const getTemplate = (relativePath) => {
-    try {
-        const splitted = relativePath.split(/\\|\//g);
-        const doc = js_yaml_1.default.load(fs_1.default.readFileSync(path_1.default.join(paths_1.default.root, 'templates', ...splitted), { encoding: 'utf8' }));
-        return doc;
-    }
-    catch (err) {
-        throw new Error(`Failed parse template on path ${relativePath}. Error: ` + err);
-    }
+const generator_constructor_1 = require("./generator.constructor");
+const generateItem = (type, name) => {
+    const entity = new generator_constructor_1.Generator({
+        input: name,
+        pathTo: [`${type}s`],
+        relativePath: `${type}s/_${type}.yaml`,
+    })
+        .replaceContent()
+        .writeContent();
+    console.log(`${entity.fileName} was generated`);
 };
-const writeSimpleTemplate = (relativePath, pathTo) => {
-    const template = getTemplate(relativePath);
-    (0, writeFileTo_1.writeFileTo)(path_1.default.join(paths_1.default.execRoot, pathTo, template.fileName), template.content);
-};
-exports.writeSimpleTemplate = writeSimpleTemplate;
-const generator = (type, name) => {
-    const template = getTemplate(`${type}s/_${type}.yaml`);
-    let content = (0, generator_utils_1.replaceConditonalPattern)(template.content, argparser_1.default.flags);
-    content = (0, generator_utils_1.replacePattern)(content, name);
-    (0, writeFileTo_1.writeFileTo)(path_1.default.join(paths_1.default.execRoot, paths_1.default.outputDir, `${type}s`, (0, generator_utils_1.replacePattern)(template.fileName, name)), content);
-    console.log(`${(0, generator_utils_1.toPascalCase)(type)} ${name} was generated`);
-};
-const generateModel = generator.bind(null, 'model');
-const generateController = generator.bind(null, 'controller');
-const generateService = generator.bind(null, 'service');
-const generateMiddleware = generator.bind(null, 'middleware');
 const generate = () => {
     const { gen } = argparser_1.default;
     Object.keys(gen).forEach((name) => {
         if (gen[name].includes('m'))
-            generateModel(name);
+            generateItem('model', name);
         if (gen[name].includes('c'))
-            generateController(name);
+            generateItem('controller', name);
         if (gen[name].includes('s'))
-            generateService(name);
+            generateItem('service', name);
         if (gen[name].includes('mw'))
-            generateMiddleware(name);
+            generateItem('middleware', name);
     });
 };
 exports.generate = generate;
 const generateMongoModule = () => {
-    (0, exports.writeSimpleTemplate)('services/MongoService/index.yaml', paths_1.default.outputDir + '/services/MongoService');
-    (0, exports.writeSimpleTemplate)('services/MongoService/interface.yaml', paths_1.default.outputDir + '/services/MongoService');
-    (0, exports.writeSimpleTemplate)('services/MongoService/serviceWithMongo.yaml', paths_1.default.outputDir + '/services/MongoService');
+    new generator_constructor_1.Generator({
+        relativePath: 'services/MongoService/index.yaml',
+        pathTo: ['services', 'MongoService'],
+    }).writeContent();
+    new generator_constructor_1.Generator({
+        relativePath: 'services/MongoService/interface.yaml',
+        pathTo: ['services', 'MongoService'],
+    }).writeContent();
+    new generator_constructor_1.Generator({
+        relativePath: 'services/MongoService/serviceWithMongo.yaml',
+        pathTo: ['services', 'MongoService'],
+    }).writeContent();
 };
 exports.generateMongoModule = generateMongoModule;
 const generate3rdPartyModule = () => {
-    (0, exports.writeSimpleTemplate)('services/ThirdPartyRequestService.yaml', paths_1.default.outputDir + '/services');
+    new generator_constructor_1.Generator({
+        relativePath: 'services/ThirdPartyRequestService.yaml',
+        pathTo: ['services'],
+    }).writeContent();
 };
 exports.generate3rdPartyModule = generate3rdPartyModule;
 const generateErrorHandlerModule = () => {
-    (0, exports.writeSimpleTemplate)('utils/errorHandler/dictionary.yaml', paths_1.default.outputDir + '/utils/errorHandler');
-    (0, exports.writeSimpleTemplate)('utils/errorHandler/index.yaml', paths_1.default.outputDir + '/utils/errorHandler');
-    (0, exports.writeSimpleTemplate)('controllers/utils.yaml', paths_1.default.outputDir + '/controllers');
+    new generator_constructor_1.Generator({
+        relativePath: 'utils/errorHandler/dictionary.yaml',
+        pathTo: ['utils', 'errorHandler'],
+    }).writeContent();
+    new generator_constructor_1.Generator({
+        relativePath: 'utils/errorHandler/index.yaml',
+        pathTo: ['utils', 'errorHandler'],
+    }).writeContent();
+    new generator_constructor_1.Generator({
+        relativePath: 'controllers/utils.yaml',
+        pathTo: ['controllers'],
+    }).writeContent();
 };
 exports.generateErrorHandlerModule = generateErrorHandlerModule;
 const generateConfig = () => {
     const access = (0, generateSecretKey_1.generateSecretKey)();
     const refresh = (0, generateSecretKey_1.generateSecretKey)();
-    const template = getTemplate('config.yaml');
-    let content = (0, generator_utils_1.replaceConditonalPattern)(template.content, argparser_1.default.flags);
-    content = (0, generator_utils_1.replacePattern)(content, '', { access, refresh });
-    (0, writeFileTo_1.writeFileTo)(path_1.default.join(paths_1.default.execRoot, paths_1.default.outputDir, template.fileName), content);
+    new generator_constructor_1.Generator({ relativePath: 'config.yaml', variables: { access, refresh } })
+        .replaceContent()
+        .writeContent();
 };
 exports.generateConfig = generateConfig;
