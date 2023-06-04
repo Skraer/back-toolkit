@@ -76,7 +76,9 @@ export class ArgsParser implements IArgsParser {
             this._gen[nextArg] = [...new Set(elems.filter((el) => isGenValid(el)))]
           }
 
-          if (prevArg && prevArg.startsWith('gen:')) return currArgs.slice(idx - 1, idx + 1)
+          if (prevArg && prevArg.startsWith('gen:')) {
+            return [...currArgs.slice(0, idx - 1), ...currArgs.slice(idx + 1)]
+          }
           return [...currArgs, arg]
         }, [] as string[])
       }
@@ -93,7 +95,7 @@ export class ArgsParser implements IArgsParser {
           if (arg.startsWith('modules:')) {
             const elems = arg.replace('modules:', '').split(':') as ModuleType[]
             elems.filter((el) => isModuleValid(el)).forEach((m) => modulesSet.add(m))
-            return currArgs.slice(idx, idx + 1)
+            return [...currArgs.slice(0, idx), ...currArgs.slice(idx + 1)]
           }
           return [...currArgs, arg]
         }, [] as string[])
