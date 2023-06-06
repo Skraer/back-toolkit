@@ -69,9 +69,11 @@ const generateErrorHandlerModule = () => {
 };
 exports.generateErrorHandlerModule = generateErrorHandlerModule;
 const generateConfig = () => {
+    const pathTo = ['config'];
+    new generator_constructor_1.Generator({ relativePath: 'config/index.yaml', pathTo }).replaceContent().writeContent();
     const access = (0, generateSecretKey_1.generateSecretKey)();
     const refresh = (0, generateSecretKey_1.generateSecretKey)();
-    new generator_constructor_1.Generator({ relativePath: 'config.yaml', variables: { access, refresh } })
+    new generator_constructor_1.Generator({ relativePath: 'config/auth.yaml', pathTo, variables: { access, refresh } })
         .replaceContent()
         .writeContent();
 };

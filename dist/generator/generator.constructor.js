@@ -46,7 +46,10 @@ class Generator {
     }
     writeContent() {
         return this._wrap(() => {
-            (0, writeFileTo_1.writeFileTo)(path_1.default.join(paths_1.default.execRoot, paths_1.default.outputDir, ...this.pathTo, this.fileName), this.content);
+            if (!this._template.writeIf ||
+                this._template.writeIf.every((flag) => argparser_1.args.flags[flag])) {
+                (0, writeFileTo_1.writeFileTo)(path_1.default.join(paths_1.default.execRoot, paths_1.default.outputDir, ...this.pathTo, this.fileName), this.content);
+            }
         });
     }
     replaceContent(passCond = false) {

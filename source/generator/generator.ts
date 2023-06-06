@@ -66,9 +66,11 @@ export const generateErrorHandlerModule = () => {
 }
 
 export const generateConfig = () => {
+  const pathTo = ['config']
+  new Generator({ relativePath: 'config/index.yaml', pathTo }).replaceContent().writeContent()
   const access = generateSecretKey()
   const refresh = generateSecretKey()
-  new Generator({ relativePath: 'config.yaml', variables: { access, refresh } })
+  new Generator({ relativePath: 'config/auth.yaml', pathTo, variables: { access, refresh } })
     .replaceContent()
     .writeContent()
 }

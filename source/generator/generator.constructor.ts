@@ -11,7 +11,7 @@ import {
 } from './generator.utils'
 import paths from '../paths'
 import { writeFileTo } from '../utils/writeFileTo'
-import { args } from '../argparser'
+import { ArgFlagType, args } from '../argparser'
 
 type GeneratorParamsType = {
   relativePath: string
@@ -70,10 +70,15 @@ export class Generator {
 
   public writeContent() {
     return this._wrap(() => {
-      writeFileTo(
-        path.join(paths.execRoot, paths.outputDir, ...this.pathTo, this.fileName),
-        this.content
-      )
+      if (
+        !this._template.writeIf ||
+        this._template.writeIf.every((flag) => args.flags[flag as ArgFlagType])
+      ) {
+        writeFileTo(
+          path.join(paths.execRoot, paths.outputDir, ...this.pathTo, this.fileName),
+          this.content
+        )
+      }
     })
   }
 

@@ -1,0 +1,7 @@
+fileName: auth.ts
+writeIf: ['auth']
+content: |
+  export const SECRET_ACCESS_KEY = '{{access}}'
+  export const SECRET_REFRESH_KEY = '{{refresh}}'
+  export const ACCESS_EXPIRE = '30m'
+  export const REFRESH_EXPIRE = '14d'

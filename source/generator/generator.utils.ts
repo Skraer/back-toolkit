@@ -3,6 +3,7 @@ import { ArgFlagType, ArgsType } from '../argparser'
 export type TemplateType = {
   fileName: string
   content: string
+  writeIf?: string[]
 }
 
 type FilterType = 'U' | 'L' | 'P' | 'C'
