@@ -1,4 +1,4 @@
-import { ArgFlagType, ArgsType } from '../argparser'
+import { ArgFlagType, ArgsType, ModuleType, args } from '../argparser'
 
 export type TemplateType = {
   fileName: string
@@ -57,13 +57,19 @@ export const replaceConditonalPattern = (content: string, flags: ArgsType['flags
     const matches = inner.match(generatorConfig.patternsConditional.inner)
 
     if (matches && matches.length) {
-      const flag = matches[0].replace(generatorConfig.patternsConditional.inner, (_, f) => f)
+      const cond = matches[0].replace(generatorConfig.patternsConditional.inner, (_, f) => f)
       const value = matches[1].replace(generatorConfig.patternsConditional.inner, (_, v) => v)
 
       let val = ''
 
-      if (flag.startsWith('!')) val = !flags[flag.substring(1) as ArgFlagType] ? value : ''
-      else val = flags[flag as ArgFlagType] ? value : ''
+      if (cond.startsWith('m:')) {
+        const modules = cond.split(':').slice(1)
+        const condPassed = modules.every((m) => args.modules.includes(m as ModuleType))
+        val = condPassed ? value : ''
+      } else {
+        if (cond.startsWith('!')) val = !flags[cond.substring(1) as ArgFlagType] ? value : ''
+        else val = flags[cond as ArgFlagType] ? value : ''
+      }
 
       val = val.replace(
         generatorConfig.patternsConditional.withVar,

@@ -82,7 +82,7 @@ export const initFiles = () => {
   new Generator('gitignore.yaml').writeContent(true)
   new Generator('prettierignore.yaml').writeContent(true)
   new Generator('router.yaml').writeContent()
-  new Generator('index.yaml').writeContent()
+  new Generator('index.yaml').replaceContent().writeContent()
   new Generator({
     relativePath: 'controllers/interface.yaml',
     pathTo: ['controllers'],

@@ -1,11 +1,18 @@
 fileName: index.ts
+variables:
+  connectMongo: |
+    if (withMongo) {
+          const isConnected = await mongoService.connect('mongodb://localhost:27017')
+          if (isConnected) console.log('MongoDB OK')
+          else console.error('MongoDB error')
+        }
 content: |
   import cors from 'cors'
   import path from 'path'
   import express from 'express'
-  // import mongoose from 'mongoose'
   import { PORT, isProd, FRONTEND_DIR_NAME } from './config'
   import router, { readControllers } from './router'
+  {{[m:mongo][import mongoService from './services/MongoService']}}
 
   const app = express()
 
@@ -13,24 +20,21 @@ content: |
   app.use(express.json())
 
   if (isProd()) {
-    app.use(
-      express.static(path.join(__dirname, `../../${FRONTEND_DIR_NAME}/dist`))
-    )
+    app.use(express.static(path.join(__dirname, `../../${FRONTEND_DIR_NAME}/dist`)))
   }
 
   app.use('/api/v1', router)
 
   if (isProd()) {
     app.get('*', (req, res) => {
-      res.sendFile(
-        path.join(__dirname, `../../${FRONTEND_DIR_NAME}/dist/index.html`)
-      )
+      res.sendFile(path.join(__dirname, `../../${FRONTEND_DIR_NAME}/dist/index.html`))
     })
   }
 
-  const startApp = async () => {
+  const startApp = async (withMongo: boolean) => {
     try {
       await readControllers()
+      {{[m:mongo][<%connectMongo%>]}}
       app.listen(PORT, () => {
         console.log(`server started: http://localhost:${PORT}`)
       })
@@ -44,4 +48,4 @@ content: |
     process.exit()
   })
 
-  startApp()
+  startApp(false)
