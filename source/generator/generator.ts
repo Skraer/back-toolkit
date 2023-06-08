@@ -63,13 +63,12 @@ export const generateErrorHandlerModule = () => {
     relativePath: 'utils/errorHandler/index.yaml',
     pathTo: ['utils', 'errorHandler'],
   }).writeContent()
-  const utils = new Generator({
+  new Generator({
     relativePath: 'controllers/utils.yaml',
     pathTo: ['controllers'],
   })
     .replaceContent()
     .writeContent()
-  console.log('utils', utils)
 }
 
 export const generateConfig = () => {

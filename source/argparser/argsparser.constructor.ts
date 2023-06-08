@@ -68,7 +68,9 @@ export class ArgsParser implements IArgsParser {
           const nextArg = arr[idx + 1]
 
           if (arg === 'mdir') this._mdir.push(nextArg)
-          if (prevArg && prevArg === 'mdir') return currArgs.slice(idx - 1, idx + 1)
+          if (prevArg && prevArg === 'mdir') {
+            return [...currArgs.slice(0, idx - 1), ...currArgs.slice(idx + 1)]
+          }
           return [...currArgs, arg]
         }, [] as string[])
       }

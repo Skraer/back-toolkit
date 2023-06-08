@@ -24,7 +24,7 @@
     "test": "npm run build && node ./dist/bin/index.js init",
     "build": "tsc && npm run copy-files",
     "copy-files": "copyfiles -u 1 source/templates/**/*.yaml source/consoleMessages/**/*.yaml dist/",
-    "publish": "npm run build && npm publish"
+    "pub": "npm run build && npm publish"
   },
   "repository": {
     "type": "git",
