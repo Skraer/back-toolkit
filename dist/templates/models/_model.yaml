@@ -1,5 +1,0 @@
-fileName: '{{P}}.ts'
-content: |
-  export interface I{{P}} {
-
-  }
