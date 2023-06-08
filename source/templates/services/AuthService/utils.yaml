@@ -1,0 +1,36 @@
+fileName: 'utils.ts'
+content: |
+  import jwt from 'jsonwebtoken'
+  import { ACCESS_EXPIRE, REFRESH_EXPIRE, SECRET_ACCESS_KEY, SECRET_REFRESH_KEY } from '../../config'
+  import { TokenPayloadType } from '../../models/Auth'
+  import { CustomError, ERRORS } from '../../utils/errorHandler'
+
+  export const generateAccessToken = (payload: TokenPayloadType) => {
+    return jwt.sign(payload, SECRET_ACCESS_KEY, { expiresIn: ACCESS_EXPIRE })
+  }
+
+  export const generateRefreshToken = (payload: TokenPayloadType) => {
+    return jwt.sign(payload, SECRET_REFRESH_KEY, { expiresIn: REFRESH_EXPIRE })
+  }
+
+  export const extractData = (data: TokenPayloadType & { [key: string]: any }): TokenPayloadType => ({
+    id: data.id.toString(),
+    login: data.login,
+    role: data.role,
+  })
+
+  export const getIdFromRefresh = (token: string) => {
+    let login: string | null = null
+
+    jwt.verify(token, SECRET_REFRESH_KEY, undefined, (err, decoded) => {
+      if (err) {
+        throw new CustomError(ERRORS.BAD_REFRESH_TOKEN)
+      } else {
+        const data = extractData(decoded as TokenPayloadType)
+        login = data.login
+        return data
+      }
+    })
+
+    return login
+  }

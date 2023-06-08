@@ -12,7 +12,8 @@ content: |
     EXPIRED_REFRESH_TOKEN,
     BAD_ACCESS_TOKEN,
     EXPIRED_ACCESS_TOKEN,
-    NOT_SPECIFIED_ACCESS_TOKEN
+    NOT_SPECIFIED_ACCESS_TOKEN,
+    BAD_CREDENTIALS,
   }
 
   type CustomErrorDictionaryType = {
@@ -36,6 +37,7 @@ content: |
     { id: ERRORS.BAD_ACCESS_TOKEN, message: 'Access token is invalid', status: 403 },
     { id: ERRORS.EXPIRED_ACCESS_TOKEN, message: 'Access token is expired', status: 403 },
     { id: ERRORS.NOT_SPECIFIED_ACCESS_TOKEN, message: 'Access token is not specified', status: 401 },
+    { id: ERRORS.BAD_CREDENTIALS, message: 'Invalid login or password', status: 403 },
   ]
 
   const dictionaryMap = new Map<ERRORS, CustomErrorDictionaryType>()

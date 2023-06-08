@@ -4,13 +4,16 @@ import args from '../argparser/argparser'
 import {
   generate,
   generate3rdPartyModule,
+  generateAuthModule,
   generateErrorHandlerModule,
   generateMongoModule,
 } from '../generator'
 import {
   addScripts,
   getInstalledPackages,
+  gitInit,
   initFiles,
+  installAuthDeps,
   installDeps,
   installMongoDeps,
 } from '../initializer'
@@ -20,6 +23,7 @@ if (args.init) {
   installDeps(true)
   installDeps()
   initFiles()
+  generateErrorHandlerModule()
   addScripts()
 }
 
@@ -29,10 +33,6 @@ if (args.test) {
 
 if (args.mdir.length) {
   makeDirs(args.mdir)
-}
-
-if (Object.keys(args.gen).length) {
-  generate()
 }
 
 if (args.modules.includes('mongo')) {
@@ -46,14 +46,23 @@ if (args.modules.includes('3rdparty')) {
   console.log('3rd party request module was generated')
 }
 
-if (args.modules.includes('errh')) {
-  generateErrorHandlerModule()
-  console.log('Error handler module was generated')
+if (args.modules.includes('auth')) {
+  installAuthDeps()
+  installAuthDeps(true)
+  generateAuthModule()
+}
+
+if (Object.keys(args.gen).length) {
+  generate()
 }
 
 if (args.checkPkg) {
   const packages = getInstalledPackages()
   console.log('INSTALLED PACKAGES: ', packages)
+}
+
+if (args.init) {
+  gitInit()
 }
 
 process.exit()

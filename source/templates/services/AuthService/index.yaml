@@ -1,0 +1,110 @@
+fileName: 'index.ts'
+content: |
+  import { ObjectId, WithId } from 'mongodb'
+  import bcrypt from 'bcrypt'
+  import { SignInReturnType, TokenPayloadType, UserCredentialsType } from '../../models/Auth'
+  import { ServiceWithMongo } from '../MongoService/serviceWithMongo'
+  import { generateAccessToken, generateRefreshToken, getIdFromRefresh } from './utils'
+  import { CustomError } from '../../utils/errorHandler'
+  import { ERRORS } from '../../utils/errorHandler/dictionary'
+
+  class AuthService extends ServiceWithMongo<UserCredentialsType> {
+    private SALT_ROUNDS = Number(process.env.SALT_ROUNDS || 10)
+    private refreshTokensMap = new Map<string, string>()
+
+    constructor() {
+      super({ collectionName: 'users' })
+    }
+
+    async create(user: UserCredentialsType) {
+      const foundUser = await this.findUserByLogin(user.login)
+      if (foundUser) {
+        throw new CustomError(ERRORS.EXISTS_LOGIN)
+      }
+
+      const salt = await bcrypt.genSalt(this.SALT_ROUNDS)
+      const password = await bcrypt.hash(user.password, salt)
+      const createdAt = new Date().toISOString()
+
+      const created = await this.collection.insertOne({
+        login: user.login,
+        password,
+        createdAt,
+        role: user.role || 'user',
+      })
+
+      return { login: user.login, createdAt, _id: created.insertedId }
+    }
+
+    async login(credentials: UserCredentialsType): Promise<SignInReturnType> {
+      const foundUser = await this.findUserByLogin(credentials.login)
+
+      if (!foundUser) throw new CustomError(ERRORS.BAD_CREDENTIALS)
+
+      const isPasswordPassed = await bcrypt.compare(credentials.password, foundUser.password)
+      if (!isPasswordPassed) throw new CustomError(ERRORS.BAD_CREDENTIALS)
+
+      const tokenPayload = this._getTokenPayload(foundUser)
+
+      const access = generateAccessToken(tokenPayload)
+      const refresh = generateRefreshToken(tokenPayload)
+
+      this.refreshTokensMap.set(foundUser._id.toString(), refresh)
+
+      return { access, refresh }
+    }
+
+    async refreshAccess(token: string): Promise<SignInReturnType> {
+      if (!this._hasRefreshInMap(token)) throw new CustomError(ERRORS.BAD_REFRESH_TOKEN)
+
+      const userId = getIdFromRefresh(token)
+
+      const user = userId ? await this.findUserById(new ObjectId(userId)) : null
+
+      if (user) {
+        const tokenPayload = this._getTokenPayload(user)
+        const access = generateAccessToken(tokenPayload)
+        const refresh = generateRefreshToken(tokenPayload)
+        this.refreshTokensMap.set(user._id.toString(), refresh)
+        return { access, refresh }
+      } else {
+        throw new CustomError(ERRORS.NOT_FOUND_USER)
+      }
+    }
+
+    async deleteUser(userId: string | ObjectId) {
+      const id = new ObjectId(userId)
+      const user = await this.findUserById(id)
+      if (!user) throw new CustomError(ERRORS.NOT_FOUND_USER)
+
+      this.refreshTokensMap.delete(user._id.toString())
+      this.collection.deleteOne({ _id: id })
+
+      return true
+    }
+
+    async findUserByLogin(login: string) {
+      return await this.collection.findOne({ login: login })
+    }
+
+    async findUserById(id: ObjectId) {
+      return await this.collection.findOne({ _id: new ObjectId(id) })
+    }
+
+    private _getTokenPayload(user: WithId<UserCredentialsType>): TokenPayloadType {
+      const data: TokenPayloadType = {
+        id: user._id.toString(),
+        login: user.login,
+      }
+      if (user.role) data.role = user.role
+      return data
+    }
+
+    private _hasRefreshInMap(token: string): boolean {
+      return Array.from(this.refreshTokensMap.values()).includes(token)
+    }
+  }
+
+  const authService = new AuthService()
+
+  export default authService

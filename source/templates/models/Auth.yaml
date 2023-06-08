@@ -1,0 +1,22 @@
+fileName: 'Auth.ts'
+content: |
+  export type RoleType = 'root' | 'user'
+
+  export type UserCredentialsType = {
+    login: string
+    password: string
+    createdAt: string
+    role?: RoleType
+  }
+
+  export type SignInReturnType = {
+    access: string
+    refresh?: string
+  }
+
+  export type TokenPayloadType = {
+    id: string
+    login: string
+    role?: RoleType
+  }
+

@@ -1,0 +1,47 @@
+fileName: 'AuthController.ts'
+content: |
+  import { Request, Response } from 'express'
+  import { UserCredentialsType } from '../models/Auth'
+  import authService from '../services/AuthService'
+  import { handleResponseError, AddRoute } from './utils'
+
+  class AuthController {
+    constructor() {}
+
+    @AddRoute('/signup', 'post')
+    async register(req: Request, res: Response) {
+      try {
+        const credentials = req.body as UserCredentialsType
+        const user = await authService.create(credentials)
+        res.json(user)
+      } catch (e: any) {
+        handleResponseError(res, e, 'Cannot register: ')
+      }
+    }
+
+    @AddRoute('/signin', 'post')
+    async login(req: Request, res: Response) {
+      try {
+        const credentials = req.body as UserCredentialsType
+        const result = await authService.login(credentials)
+        res.json(result)
+      } catch (e: any) {
+        handleResponseError(res, e, 'Cannot login: ')
+      }
+    }
+
+    @AddRoute('/refresh', 'post')
+    async refreshAccess(req: Request, res: Response) {
+      try {
+        const { token } = req.body
+        const result = await authService.refreshAccess(token)
+        res.json(result)
+      } catch (e: any) {
+        handleResponseError(res, e, 'Cannot refresh: ')
+      }
+    }
+  }
+
+  const authController = new AuthController()
+
+  export default authController

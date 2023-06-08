@@ -2,14 +2,20 @@ import fs from 'fs'
 import path from 'path'
 
 import { execSync } from 'child_process'
-import { devPackages, mongoPackages, packages } from './initializer.utils'
+import {
+  authDevPackages,
+  authPackages,
+  devPackages,
+  mongoPackages,
+  packages,
+} from './initializer.utils'
 import paths from '../paths'
 import { Generator, generateConfig } from '../generator'
 
 export const installDeps = (isDev = false) => {
   try {
     execSync(`npm i ${isDev ? '--save-dev ' + devPackages.join(' ') : packages.join(' ')}`)
-    console.log('Success installing ' + isDev ? 'dev ' : '' + 'dependencies')
+    console.log(`Success installed ${isDev ? 'dev' : ''} dependencies`)
   } catch (err) {
     console.error(`exec error: ${err}`)
   }
@@ -28,7 +34,25 @@ export const getInstalledPackages = () => {
 export const installMongoDeps = () => {
   try {
     execSync(`npm i ${mongoPackages.join(' ')}`)
-    console.log('Success installing mongo dependencies')
+    console.log('Success installed mongo dependencies')
+  } catch (err) {
+    console.error(`exec error: ${err}`)
+  }
+}
+
+export const gitInit = () => {
+  try {
+    execSync('git init')
+    console.log('Git init success')
+  } catch (err) {
+    console.error(`exec error: ${err}`)
+  }
+}
+
+export const installAuthDeps = (isDev = false) => {
+  try {
+    execSync(`npm i ${isDev ? '--save-dev ' + authDevPackages.join(' ') : authPackages.join(' ')}`)
+    console.log(`Success installed auth ${isDev ? 'dev' : ''} dependencies`)
   } catch (err) {
     console.error(`exec error: ${err}`)
   }
@@ -53,13 +77,17 @@ export const addScripts = () => {
 }
 
 export const initFiles = () => {
-  new Generator('tsconfig.yaml').writeContent()
-  new Generator('nodemon.yaml').writeContent()
+  new Generator('tsconfig.yaml').writeContent(true)
+  new Generator('nodemon.yaml').writeContent(true)
+  new Generator('gitignore.yaml').writeContent(true)
+  new Generator('prettierignore.yaml').writeContent(true)
   new Generator('router.yaml').writeContent()
   new Generator('index.yaml').writeContent()
   new Generator({
     relativePath: 'controllers/interface.yaml',
     pathTo: ['controllers'],
-  }).writeContent()
+  })
+    .replaceContent()
+    .writeContent()
   generateConfig()
 }

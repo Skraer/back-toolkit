@@ -1,7 +1,14 @@
 fileName: utils.ts
+variables:
+  withAuth: |
+    if (guard) router[method](path, AuthMiddleware, descriptor.value)
+          else router[method](path, descriptor.value)
+  withoutAuth: |
+    router[method](path, descriptor.value)
 content: |
   import { Response } from 'express'
   import { CustomError, CustomErrorDictionaryType } from '../utils/errorHandler'
+  {{[auth][import { AuthMiddleware } from '../middlewares/AuthMiddleware']}}
 
   export const handleResponseError = (
     res: Response,
@@ -11,4 +18,20 @@ content: |
     console.error(logPrefix || 'Unhandled controller error: ', e)
     const unknown = CustomError.GetUnknown()
     res.status(e.status || unknown.status).json(e.message || unknown.message)
+  }
+
+  export function AddRoute(
+    path: string,
+    method: 'all' | 'get' | 'post' | 'put' | 'delete' | 'patch' | 'options' | 'head',
+    guard = false
+  ) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+      const getRouter = () => import('../router')
+      getRouter().then((obj) => {
+        const router = obj.default
+        {{[auth][<%withAuth%>]}}
+        {{[!auth][<%withoutAuth%>]}}
+        return descriptor
+      })
+    }
   }

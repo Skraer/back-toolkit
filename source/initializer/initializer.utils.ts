@@ -10,3 +10,6 @@ export const devPackages = [
 export const packages = ['dotenv', 'express', 'cors', 'nanoid']
 
 export const mongoPackages = ['mongodb']
+
+export const authPackages = ['jsonwebtoken', 'bcrypt']
+export const authDevPackages = ['@types/jsonwebtoken', '@types/bcrypt']

@@ -1,0 +1,30 @@
+fileName: 'AuthMiddleware.ts'
+content: |
+  import { NextFunction, Response } from 'express'
+  import jwt from 'jsonwebtoken'
+  import { SECRET_ACCESS_KEY } from '../config'
+  import { TokenPayloadType } from '../models/Auth'
+  import { RequestExt } from '../controllers/interface'
+  import { CustomError } from '../utils/errorHandler'
+  import { ERRORS } from '../utils/errorHandler/dictionary'
+
+  export function AuthMiddleware(req: RequestExt, res: Response, next: NextFunction) {
+    if (req.method === 'OPTIONS') next()
+
+    try {
+      const token = req.headers.authorization?.split(' ')[1]
+      if (!token) {
+        throw new CustomError(ERRORS.NOT_SPECIFIED_ACCESS_TOKEN)
+      }
+
+      const decodedData = jwt.verify(token, SECRET_ACCESS_KEY) as TokenPayloadType
+      console.log('decodedData', decodedData)
+
+      req.user = decodedData
+      next()
+    } catch (e: any) {
+      console.log('Auth middleware error', e)
+      const err = CustomError.GetErrorData(ERRORS.BAD_ACCESS_TOKEN)
+      res.status(err.status).json(err.message)
+    }
+  }

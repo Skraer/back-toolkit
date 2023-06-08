@@ -4,6 +4,7 @@ export type TemplateType = {
   fileName: string
   content: string
   writeIf?: string[]
+  variables?: { [key: string]: string | number | boolean }
 }
 
 type FilterType = 'U' | 'L' | 'P' | 'C'
@@ -17,6 +18,7 @@ export type GenConfigType = {
   patternsConditional: {
     outer: RegExp
     inner: RegExp
+    withVar: RegExp
   }
   filters: {
     [key in FilterType]: (input: string) => string
@@ -24,10 +26,11 @@ export type GenConfigType = {
 }
 
 export const generatorConfig: GenConfigType = {
-  pattern: /{{([\s\S]*?)}}/gm,
+  pattern: /\{\{([\w\s\d]+?)\}\}/gm,
   patternsConditional: {
-    outer: /{{((?:\[[.\s\S]*?\])+.*?)}}/gm,
+    outer: /\{\{((?:\[[.\s\S]*?\])+.*?)\}\}/gm,
     inner: /\[([.\s\S]*?)\]/g,
+    withVar: /\<\%([\w\s\d]+?)\%\>/g,
   },
   filters: {
     U: (input: string) => input.toUpperCase(),
@@ -57,8 +60,16 @@ export const replaceConditonalPattern = (content: string, flags: ArgsType['flags
       const flag = matches[0].replace(generatorConfig.patternsConditional.inner, (_, f) => f)
       const value = matches[1].replace(generatorConfig.patternsConditional.inner, (_, v) => v)
 
-      if (flag.startsWith('!')) return !flags[flag.substring(1) as ArgFlagType] ? value : ''
-      else return flags[flag as ArgFlagType] ? value : ''
+      let val = ''
+
+      if (flag.startsWith('!')) val = !flags[flag.substring(1) as ArgFlagType] ? value : ''
+      else val = flags[flag as ArgFlagType] ? value : ''
+
+      val = val.replace(
+        generatorConfig.patternsConditional.withVar,
+        (str, varName) => `{{${varName}}}`
+      )
+      return val
     }
 
     return str

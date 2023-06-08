@@ -1,0 +1,4 @@
+fileName: .prettierignore
+content: |
+  src/utils/errorHandler/dictionary.ts
+  dist

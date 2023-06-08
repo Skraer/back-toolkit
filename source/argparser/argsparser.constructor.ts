@@ -1,4 +1,12 @@
-import { ArgsType, GenType, IArgsParser, ModuleType, isGenValid, isModuleValid } from './'
+import {
+  ArgFlagType,
+  ArgsType,
+  GenType,
+  IArgsParser,
+  ModuleType,
+  isGenValid,
+  isModuleValid,
+} from './'
 
 export class ArgsParser implements IArgsParser {
   private _gen: ArgsType['gen'] = {}
@@ -33,14 +41,18 @@ export class ArgsParser implements IArgsParser {
   }
   private _flags: ArgsType['flags'] = {
     mongo: false,
-    errh: false,
     auth: false,
+    guard: false,
   }
   public get flags() {
     return this._flags
   }
 
   private readonly _rawSource: string[]
+  public get rawSource() {
+    return this._rawSource
+  }
+
   private _raw: string[]
 
   constructor(rawArgs: string[]) {
@@ -101,6 +113,7 @@ export class ArgsParser implements IArgsParser {
         }, [] as string[])
 
         this._modules = [...modulesSet]
+        if (modulesSet.has('auth')) raw = this._forceAddFlag(raw, 'auth')
       }
       return raw
     })
@@ -170,5 +183,10 @@ export class ArgsParser implements IArgsParser {
     let raw = this._raw
     this._raw = callback(raw)
     return this
+  }
+
+  private _forceAddFlag(raw: string[], flag: ArgFlagType) {
+    this._flags[flag] = true
+    return raw.filter((f) => f !== `-${flag}`)
   }
 }

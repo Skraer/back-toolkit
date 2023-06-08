@@ -2,53 +2,57 @@ fileName: '{{P}}Controller.ts'
 content: |
   import { Request, Response } from 'express'
   import IController from './interface'
-  {{[errh][import { handleResponseError } from './utils']}}
+  import { handleResponseError, AddRoute } from './utils'
 
   class {{P}}Controller implements IController {
+    static ROUTE_NAME = '/{{L}}'
     constructor() {}
 
+    @AddRoute({{P}}Controller.ROUTE_NAME, 'post'{{[guard][, true]}})
     async create(req: Request, res: Response) {
       try {
         
       } catch (e: any) {
-        {{[errh][handleResponseError(res, e, 'Cannot create: ')]}}{{[!errh][console.error('Cannot create: ', e)
-        res.status(500).json(e.message)]}}
+        handleResponseError(res, e, 'Cannot create: ')
       }
     }
 
+    @AddRoute({{P}}Controller.ROUTE_NAME, 'get'{{[guard][, true]}})
     async getAll(req: Request, res: Response) {
       try {
 
       } catch (e: any) {
-        {{[errh][handleResponseError(res, e, 'Cannot get all: ')]}}{{[!errh][console.error('Cannot create: ', e)
-        res.status(500).json(e.message)]}}
+        handleResponseError(res, e, 'Cannot get all: ')
       }
     }
 
+    @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'get'{{[guard][, true]}})
     async getOnce(req: Request, res: Response) {
       try {
+        const { id } = req.params as { id: string }
 
       } catch (e: any) {
-        {{[errh][handleResponseError(res, e, 'Cannot get once: ')]}}{{[!errh][console.error('Cannot create: ', e)
-        res.status(500).json(e.message)]}}
+        handleResponseError(res, e, 'Cannot get once: ')
       }
     }
 
+    @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'put'{{[guard][, true]}})
     async update(req: Request, res: Response) {
       try {
+        const { id } = req.params as { id: string }
 
       } catch (e: any) {
-        {{[errh][handleResponseError(res, e, 'Cannot update: ')]}}{{[!errh][console.error('Cannot create: ', e)
-        res.status(500).json(e.message)]}}
+        handleResponseError(res, e, 'Cannot update: ')
       }
     }
 
+    @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'delete'{{[guard][, true]}})
     async delete(req: Request, res: Response) {
       try {
+        const { id } = req.params as { id: string }
 
       } catch (e: any) {
-        {{[errh][handleResponseError(res, e, 'Cannot delete: ')]}}{{[!errh][console.error('Cannot create: ', e)
-        res.status(500).json(e.message)]}}
+        handleResponseError(res, e, 'Cannot delete: ')
       }
     }
   }

@@ -51,6 +51,7 @@ export class Generator {
     }
 
     const template = this._getTemplate()
+    this._setVariables(template.variables)
     this._template = template
     this.fileName = this.input ? replacePattern(template.fileName, this.input) : template.fileName
     this.content = template.content
@@ -68,14 +69,23 @@ export class Generator {
     }
   }
 
-  public writeContent() {
+  private _setVariables(vars?: { [key: string]: string | number | boolean }) {
+    const _vars = {
+      ...(this.variables || {}),
+      ...(vars || {}),
+    }
+
+    if (Object.keys(_vars).length) this.variables = _vars
+  }
+
+  public writeContent(root = false) {
     return this._wrap(() => {
       if (
         !this._template.writeIf ||
         this._template.writeIf.every((flag) => args.flags[flag as ArgFlagType])
       ) {
         writeFileTo(
-          path.join(paths.execRoot, paths.outputDir, ...this.pathTo, this.fileName),
+          path.join(paths.execRoot, root ? '' : paths.outputDir, ...this.pathTo, this.fileName),
           this.content
         )
       }
@@ -85,7 +95,7 @@ export class Generator {
   public replaceContent(passCond = false) {
     return this._wrap(() => {
       if (!passCond) this.content = replaceConditonalPattern(this.content, args.flags)
-      this.content = replacePattern(this.content, this.input || '', this.variables)
+      this.content = replacePattern(this.content, this.input || '', { ...this.variables })
     })
   }
 

@@ -2,6 +2,7 @@ import { GeneratorItemType } from './generator.utils'
 import args from '../argparser/argparser'
 import { generateSecretKey } from '../utils/generateSecretKey'
 import { Generator } from './generator.constructor'
+import { logAfterMessage } from '../consoleMessages'
 
 const generateItem = (type: GeneratorItemType, name: string) => {
   const entity = new Generator({
@@ -41,6 +42,8 @@ export const generateMongoModule = () => {
     relativePath: 'services/MongoService/serviceWithMongo.yaml',
     pathTo: ['services', 'MongoService'],
   }).writeContent()
+
+  logAfterMessage('modules', 'mongo')
 }
 
 export const generate3rdPartyModule = () => {
@@ -48,6 +51,7 @@ export const generate3rdPartyModule = () => {
     relativePath: 'services/ThirdPartyRequestService.yaml',
     pathTo: ['services'],
   }).writeContent()
+  logAfterMessage('modules', '3rdparty')
 }
 
 export const generateErrorHandlerModule = () => {
@@ -59,10 +63,13 @@ export const generateErrorHandlerModule = () => {
     relativePath: 'utils/errorHandler/index.yaml',
     pathTo: ['utils', 'errorHandler'],
   }).writeContent()
-  new Generator({
+  const utils = new Generator({
     relativePath: 'controllers/utils.yaml',
     pathTo: ['controllers'],
-  }).writeContent()
+  })
+    .replaceContent()
+    .writeContent()
+  console.log('utils', utils)
 }
 
 export const generateConfig = () => {
@@ -70,7 +77,36 @@ export const generateConfig = () => {
   new Generator({ relativePath: 'config/index.yaml', pathTo }).replaceContent().writeContent()
   const access = generateSecretKey()
   const refresh = generateSecretKey()
-  new Generator({ relativePath: 'config/auth.yaml', pathTo, variables: { access, refresh } })
+  new Generator({
+    relativePath: 'config/auth.yaml',
+    pathTo,
+    variables: { access, refresh },
+  })
     .replaceContent()
     .writeContent()
+}
+
+export const generateAuthModule = () => {
+  new Generator({
+    relativePath: 'services/AuthService/index.yaml',
+    pathTo: ['services', 'AuthService'],
+  }).writeContent()
+  new Generator({
+    relativePath: 'services/AuthService/utils.yaml',
+    pathTo: ['services', 'AuthService'],
+  }).writeContent()
+  new Generator({
+    relativePath: 'models/Auth.yaml',
+    pathTo: ['models'],
+  }).writeContent()
+  new Generator({
+    relativePath: 'controllers/AuthController.yaml',
+    pathTo: ['controllers'],
+  }).writeContent()
+  new Generator({
+    relativePath: 'middlewares/AuthMiddleware.yaml',
+    pathTo: ['middlewares'],
+  }).writeContent()
+
+  logAfterMessage('modules', 'auth')
 }

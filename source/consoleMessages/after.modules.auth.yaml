@@ -1,0 +1,3 @@
+content: |
+  Module "auth" was generated.
+  You can set SALT_ROUNDS in .env file for generating password (by default is 10).
