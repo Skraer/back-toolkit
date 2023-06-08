@@ -5,7 +5,7 @@ content: |
   import express from 'express'
   // import mongoose from 'mongoose'
   import { PORT, isProd, FRONTEND_DIR_NAME } from './config'
-  import router from './router'
+  import router, { readControllers } from './router'
 
   const app = express()
 
@@ -30,7 +30,7 @@ content: |
 
   const startApp = async () => {
     try {
-      // await mongoose.connect(DB_URL)
+      await readControllers()
       app.listen(PORT, () => {
         console.log(`server started: http://localhost:${PORT}`)
       })

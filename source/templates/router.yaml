@@ -1,6 +1,18 @@
 fileName: router.ts
 content: |
+  import fs from 'fs'
+  import path from 'path'
   import { Router } from 'express'
+
+  export const readControllers = async () => {
+    const result = fs.readdirSync(path.join(__dirname, 'controllers'))
+    const regex = /\wController.(t|j)s/g
+    const fileNames = result.filter((fileName) => regex.test(fileName))
+
+    for (const fileName of fileNames) {
+      await import(path.join(__dirname, 'controllers', fileName))
+    }
+  }
 
   const router = Router()
 
