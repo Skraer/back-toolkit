@@ -2,7 +2,7 @@ fileName: '{{P}}Controller.ts'
 content: |
   import { Request, Response } from 'express'
   import IController from './interface'
-  import { handleResponseError, AddRoute } from './utils'
+  import { AddRoute } from './utils'
 
   class {{P}}Controller implements IController {
     static ROUTE_NAME = '/{{L}}'
