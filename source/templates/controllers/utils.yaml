@@ -27,8 +27,19 @@ content: |
   ) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
       const getRouter = () => import('../router')
+      const originalMethod = descriptor.value
+
       getRouter().then((obj) => {
         const router = obj.default
+
+        descriptor.value = async function (req: Request, res: Response) {
+          try {
+            return await originalMethod.apply(target, [req, res])
+          } catch (e: any) {
+            handleResponseError(res, e, `Cannot ${method}. Error in method "${propertyKey}".`)
+          }
+        }
+
         {{[auth][<%withAuth%>]}}
         {{[!auth][<%withoutAuth%>]}}
         return descriptor

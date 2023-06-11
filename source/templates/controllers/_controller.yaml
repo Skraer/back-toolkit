@@ -9,51 +9,24 @@ content: |
     constructor() {}
 
     @AddRoute({{P}}Controller.ROUTE_NAME, 'post'{{[guard][, true]}})
-    async create(req: Request, res: Response) {
-      try {
-        
-      } catch (e: any) {
-        handleResponseError(res, e, 'Cannot create: ')
-      }
-    }
+    async create(req: Request, res: Response) {}
 
     @AddRoute({{P}}Controller.ROUTE_NAME, 'get'{{[guard][, true]}})
-    async getAll(req: Request, res: Response) {
-      try {
-
-      } catch (e: any) {
-        handleResponseError(res, e, 'Cannot get all: ')
-      }
-    }
+    async getAll(req: Request, res: Response) {}
 
     @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'get'{{[guard][, true]}})
     async getOnce(req: Request, res: Response) {
-      try {
-        const { id } = req.params as { id: string }
-
-      } catch (e: any) {
-        handleResponseError(res, e, 'Cannot get once: ')
-      }
+      const { id } = req.params as { id: string }
     }
 
     @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'put'{{[guard][, true]}})
     async update(req: Request, res: Response) {
-      try {
-        const { id } = req.params as { id: string }
-
-      } catch (e: any) {
-        handleResponseError(res, e, 'Cannot update: ')
-      }
+      const { id } = req.params as { id: string }
     }
 
     @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'delete'{{[guard][, true]}})
     async delete(req: Request, res: Response) {
-      try {
-        const { id } = req.params as { id: string }
-
-      } catch (e: any) {
-        handleResponseError(res, e, 'Cannot delete: ')
-      }
+      const { id } = req.params as { id: string }
     }
   }
 
