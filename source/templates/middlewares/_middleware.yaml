@@ -1,8 +1,9 @@
 fileName: '{{P}}Middleware.ts'
 content: |
-  import { NextFunction, Request, Response } from 'express'
+  import { NextFunction, Response } from 'express'
+  import { RequestExt } from '../controllers/interface'
 
-  export function {{P}}Middleware (req: Request, res: Response, next: NextFunction) {
+  export function MockMiddleware (req: RequestExt, res: Response, next: NextFunction) {
     if (req.method === 'OPTIONS') next()
 
     try {
