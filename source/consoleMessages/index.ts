@@ -21,7 +21,7 @@ const getTemplate = (fileName: string) => {
 
 export const logAfterMessage = (
   action: 'modules' | 'gen' | 'init',
-  name?: ModuleType | GenType
+  name?: ModuleType | GenType | string
 ) => {
   const fileName = `after.${action}.${name || ''}`
   const template = getTemplate(fileName)

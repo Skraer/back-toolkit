@@ -1,7 +1,7 @@
 fileName: index.ts
 content: |
   import dotenv from 'dotenv'
-  {{[auth][export * from './auth']}}
+  export * from './auth'
   dotenv.config()
 
   export const FRONTEND_DIR_NAME = 'path-to-frontend'

@@ -1,13 +1,18 @@
 fileName: '{{P}}Service.ts'
+variables:
+  withMongo: |
+    class {{P}}Service extends ServiceWithMongo<I{{P}}> {
+      constructor() {
+        super({ collectionName: '{{L}}' })
+      }
+  withoutMongo: |
+    class {{P}}Service {
+      constructor() {}
 content: |
   import { I{{P}} } from '../models/{{P}}'
   {{[mongo][import { ServiceWithMongo } from './MongoService/serviceWithMongo']}}
-
-  class {{P}}Service{{[mongo][ extends ServiceWithMongo<I{{P}}>]}} {
-    {{[!mongo][constructor() {}]}}{{[mongo][constructor() {
-      super({ collectionName: '{{L}}' })
-    }]}}
-
+  {{[!mongo][<%withoutMongo%>]}}
+  {{[mongo][<%withMongo%>]}}
     async create(data: I{{P}}) {
 
     }

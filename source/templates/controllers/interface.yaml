@@ -1,11 +1,12 @@
 fileName: interface.ts
 content: |
   import { Request, Response } from 'express'
-  {{[auth][import { TokenPayloadType } from '../models/Auth'
+  import { TokenPayloadType } from '../models/Auth'
   
   export type RequestExt = Request & {
     user?: TokenPayloadType
-  }]}}
+  }
+
   export default interface IController {
     create: (req: Request, res: Response) => Promise<any>
     getAll: (req: Request, res: Response) => Promise<any>

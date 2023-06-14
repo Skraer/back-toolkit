@@ -115,7 +115,6 @@ export class ArgsParser implements IArgsParser {
         }, [] as string[])
 
         this._modules = [...modulesSet]
-        if (modulesSet.has('auth')) raw = this._forceAddFlag(raw, 'auth')
       }
       return raw
     })

@@ -11,6 +11,7 @@ import {
 } from './initializer.utils'
 import paths from '../paths'
 import { Generator, generateConfig } from '../generator'
+import { args } from '../argparser'
 
 export const installDeps = (isDev = false) => {
   try {
@@ -43,6 +44,17 @@ export const installMongoDeps = () => {
 export const gitInit = () => {
   try {
     execSync('git init')
+    const modulesStr = ['mongo', 'auth', ...args.modules].join(', ')
+    const genModulesStr = Object.keys(args.gen).join(', ')
+    const mdirsStr = args.mdir.join(', ')
+
+    let commitMsg = `init commit. modules: ${modulesStr}.`
+    commitMsg += genModulesStr ? ` gen modules: ${genModulesStr}.` : ''
+    commitMsg += mdirsStr ? ` mdirs: ${mdirsStr}.` : ''
+
+    execSync('git add .')
+    execSync(`git commit -m "${commitMsg}"`)
+
     console.log('Git init success')
   } catch (err) {
     console.error(`exec error: ${err}`)

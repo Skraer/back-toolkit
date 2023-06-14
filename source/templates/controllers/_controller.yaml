@@ -1,7 +1,7 @@
 fileName: '{{P}}Controller.ts'
 content: |
   import { Request, Response } from 'express'
-  import IController from './interface'
+  import IController, { RequestExt } from './interface'
   import { AddRoute } from './utils'
 
   class {{P}}Controller implements IController {
@@ -9,23 +9,23 @@ content: |
     constructor() {}
 
     @AddRoute({{P}}Controller.ROUTE_NAME, 'post'{{[guard][, true]}})
-    async create(req: Request, res: Response) {}
+    async create(req: RequestExt, res: Response) {}
 
     @AddRoute({{P}}Controller.ROUTE_NAME, 'get'{{[guard][, true]}})
-    async getAll(req: Request, res: Response) {}
+    async getAll(req: RequestExt, res: Response) {}
 
     @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'get'{{[guard][, true]}})
-    async getOnce(req: Request, res: Response) {
+    async getOnce(req: RequestExt, res: Response) {
       const { id } = req.params as { id: string }
     }
 
     @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'put'{{[guard][, true]}})
-    async update(req: Request, res: Response) {
+    async update(req: RequestExt, res: Response) {
       const { id } = req.params as { id: string }
     }
 
     @AddRoute(`${{{P}}Controller.ROUTE_NAME}/:id`, 'delete'{{[guard][, true]}})
-    async delete(req: Request, res: Response) {
+    async delete(req: RequestExt, res: Response) {
       const { id } = req.params as { id: string }
     }
   }

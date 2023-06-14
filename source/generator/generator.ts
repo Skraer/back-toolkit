@@ -11,6 +11,7 @@ const generateItem = (type: GeneratorItemType, name: string) => {
     relativePath: `${type}s/_${type}.yaml`,
   })
     .replaceContent()
+    .replaceContent()
     .writeContent()
 
   console.log(`${entity.fileName} was generated`)

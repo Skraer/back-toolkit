@@ -1,14 +1,8 @@
 fileName: utils.ts
-variables:
-  withAuth: |
-    if (guard) router[method](path, AuthMiddleware, descriptor.value)
-          else router[method](path, descriptor.value)
-  withoutAuth: |
-    router[method](path, descriptor.value)
 content: |
   import { Response } from 'express'
   import { CustomError, CustomErrorDictionaryType } from '../utils/errorHandler'
-  {{[auth][import { AuthMiddleware } from '../middlewares/AuthMiddleware']}}
+  import { AuthMiddleware } from '../middlewares/AuthMiddleware'
 
   export const handleResponseError = (
     res: Response,
@@ -40,8 +34,8 @@ content: |
           }
         }
 
-        {{[auth][<%withAuth%>]}}
-        {{[!auth][<%withoutAuth%>]}}
+        if (guard) router[method](path, AuthMiddleware, descriptor.value)
+        else router[method](path, descriptor.value)
         return descriptor
       })
     }
