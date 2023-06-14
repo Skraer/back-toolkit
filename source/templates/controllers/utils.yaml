@@ -46,3 +46,24 @@ content: |
       })
     }
   }
+
+  export function logDecorator(target: Function) {
+    const keys = Object.getOwnPropertyNames(target.prototype)
+
+    for (const [idx, propertyName] of keys.entries()) {
+      if (idx === 0) continue
+      const descriptor = Object.getOwnPropertyDescriptor(target.prototype, propertyName)
+
+      if (descriptor && descriptor.value instanceof Function) {
+        const originalMethod = descriptor.value
+
+        descriptor.value = async function (...args: any[]) {
+          console.log('method ' + propertyName + ' was called')
+          const result = await originalMethod.apply(target, args)
+          console.log('result is ' + result)
+          return result
+        }
+        Object.defineProperty(target.prototype, propertyName, descriptor)
+      }
+    }
+  }
