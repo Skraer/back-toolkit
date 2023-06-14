@@ -29,6 +29,10 @@ export class ArgsParser implements IArgsParser {
   public get init() {
     return this._init
   }
+  private _secret: ArgsType['secret'] = false
+  public get secret() {
+    return this._secret
+  }
   private _test: ArgsType['test'] = false
   public get test() {
     return this._test
@@ -125,6 +129,16 @@ export class ArgsParser implements IArgsParser {
       if (raw.includes('init')) {
         this._init = true
         raw = raw.filter((arg) => arg !== 'init')
+      }
+      return raw
+    })
+  }
+
+  public parseSecret() {
+    return this._wrap((raw) => {
+      if (raw.includes('secret')) {
+        this._secret = true
+        raw = raw.filter((arg) => arg !== 'secret')
       }
       return raw
     })

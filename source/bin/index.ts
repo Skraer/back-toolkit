@@ -5,6 +5,7 @@ import {
   generate,
   generate3rdPartyModule,
   generateAuthModule,
+  generateConfig,
   generateErrorHandlerModule,
   generateMockModule,
   generateMongoModule,
@@ -31,6 +32,10 @@ if (args.init) {
   generateMongoModule()
   generateAuthModule()
   addScripts()
+}
+
+if (!args.init && args.secret) {
+  generateConfig(true)
 }
 
 if (args.test) {

@@ -7,6 +7,7 @@ export const isModuleValid = (elem: string): boolean => ['3rdparty', 'mock'].inc
 
 export type ArgsType = {
   init: boolean
+  secret: boolean
   gen: {
     [key: string]: GenType[]
   }
@@ -24,6 +25,7 @@ export type ArgsType = {
 
 export interface IArgsParser {
   init: boolean
+  secret: boolean
   gen: {
     [key: string]: GenType[]
   }
