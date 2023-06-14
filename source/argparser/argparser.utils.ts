@@ -1,9 +1,9 @@
 export type GenType = 's' | 'c' | 'm' | 'mw'
-export type ModuleType = '3rdparty'
+export type ModuleType = '3rdparty' | 'mock'
 export type ArgFlagType = 'mongo' | 'auth' | 'guard'
 
 export const isGenValid = (elem: string): boolean => ['s', 'c', 'm', 'mw'].includes(elem)
-export const isModuleValid = (elem: string): boolean => ['3rdparty'].includes(elem)
+export const isModuleValid = (elem: string): boolean => ['3rdparty', 'mock'].includes(elem)
 
 export type ArgsType = {
   init: boolean

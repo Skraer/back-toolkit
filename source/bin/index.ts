@@ -6,6 +6,7 @@ import {
   generate3rdPartyModule,
   generateAuthModule,
   generateErrorHandlerModule,
+  generateMockModule,
   generateMongoModule,
 } from '../generator'
 import {
@@ -42,7 +43,10 @@ if (args.mdir.length) {
 
 if (args.modules.includes('3rdparty')) {
   generate3rdPartyModule()
-  console.log('3rd party request module was generated')
+}
+
+if (args.modules.includes('mock')) {
+  generateMockModule()
 }
 
 if (Object.keys(args.gen).length) {

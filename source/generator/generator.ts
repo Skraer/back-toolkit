@@ -55,6 +55,30 @@ export const generate3rdPartyModule = () => {
   logAfterMessage('modules', '3rdparty')
 }
 
+export const generateMockModule = () => {
+  new Generator({
+    relativePath: 'models/Mock.yaml',
+    pathTo: ['models'],
+  }).writeContent()
+
+  new Generator({
+    relativePath: 'controllers/MockController.yaml',
+    pathTo: ['controllers'],
+  }).writeContent()
+
+  new Generator({
+    relativePath: 'services/MockService/utils.yaml',
+    pathTo: ['services', 'MockService'],
+  }).writeContent()
+
+  new Generator({
+    relativePath: 'services/MockService/index.yaml',
+    pathTo: ['services', 'MockService'],
+  }).writeContent()
+
+  logAfterMessage('modules', 'mock')
+}
+
 export const generateErrorHandlerModule = () => {
   new Generator({
     relativePath: 'utils/errorHandler/dictionary.yaml',

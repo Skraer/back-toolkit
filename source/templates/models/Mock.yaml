@@ -1,0 +1,7 @@
+fileName: Mock.ts
+content: |
+  export interface IMock {
+    title: string
+    text: string
+    count: number
+  }

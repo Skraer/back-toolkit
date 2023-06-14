@@ -1,0 +1,48 @@
+fileName: MockController.ts
+content: |
+  import { Response } from 'express'
+  import IController, { RequestExt } from './interface'
+  import { AddRoute } from './utils'
+  import mockService from '../services/MockService'
+
+  class MockController implements IController {
+    static ROUTE_NAME = '/mock'
+    constructor() {}
+
+    @AddRoute(MockController.ROUTE_NAME, 'post')
+    async create(req: RequestExt, res: Response) {
+      const data = await mockService.create(req.body)
+      res.json(data)
+    }
+
+    @AddRoute(MockController.ROUTE_NAME, 'get')
+    async getAll(req: RequestExt, res: Response) {
+      const data = await mockService.getAll()
+      res.json(data)
+    }
+
+    @AddRoute(`${MockController.ROUTE_NAME}/:id`, 'get')
+    async getOnce(req: RequestExt, res: Response) {
+      const { id } = req.params as { id: string }
+      const data = await mockService.getOnce(id)
+      res.json(data)
+    }
+
+    @AddRoute(`${MockController.ROUTE_NAME}/:id`, 'put')
+    async update(req: RequestExt, res: Response) {
+      const { id } = req.params as { id: string }
+      const data = await mockService.update(id, req.body)
+      res.json(data)
+    }
+
+    @AddRoute(`${MockController.ROUTE_NAME}/:id`, 'delete')
+    async delete(req: RequestExt, res: Response) {
+      const { id } = req.params as { id: string }
+      const data = await mockService.delete(id)
+      res.json(data)
+    }
+  }
+
+  const mockController = new MockController()
+
+  export default mockController

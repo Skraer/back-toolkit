@@ -1,0 +1,78 @@
+fileName: utils.ts
+content: |
+  import { ObjectId, WithId } from 'mongodb'
+  import { IMock } from '../../models/Mock'
+
+  const randomWords = [
+    'adventure',
+    'apple',
+    'blue',
+    'book',
+    'bridge',
+    'cat',
+    'cheese',
+    'coffee',
+    'dance',
+    'dog',
+    'dream',
+    'earth',
+    'fire',
+    'fish',
+    'flight',
+    'flower',
+    'forest',
+    'game',
+    'guitar',
+    'happy',
+    'heart',
+    'horse',
+    'ice',
+    'island',
+    'light',
+    'love',
+    'magic',
+    'moon',
+    'mountain',
+    'music',
+    'night',
+    'ocean',
+    'orange',
+    'piano',
+    'pizza',
+    'rainbow',
+    'river',
+    'rock',
+    'sea',
+    'sky',
+    'snow',
+    'star',
+    'sun',
+    'tea',
+    'tree',
+    'universe',
+    'water',
+    'wind',
+    'winter',
+    'world',
+  ]
+
+  const getRandomNum = (max: number = 100) => Math.ceil(Math.random() * max)
+
+  const getRandomText = (length: number) => {
+    let arr = []
+    for (let i = 0; i < length; i++) arr.push(randomWords[getRandomNum(50)])
+    return arr.join(' ')
+  }
+
+  export const generateMockData = (length: number): WithId<IMock>[] => {
+    const elems: WithId<IMock>[] = []
+    for (let i = 0; i < length; i++) {
+      elems.push({
+        _id: new ObjectId(),
+        count: getRandomNum(),
+        title: getRandomText(3),
+        text: getRandomText(30),
+      })
+    }
+    return elems
+  }

@@ -1,0 +1,57 @@
+fileName: index.ts
+content: |
+  import { ObjectId, WithId } from 'mongodb'
+  import { IMock } from '../../models/Mock'
+  import { ServiceWithMongo } from '../MongoService/serviceWithMongo'
+  import { generateMockData } from './utils'
+
+  class MockService extends ServiceWithMongo<IMock> {
+    private data: WithId<IMock>[]
+
+    constructor() {
+      super({ collectionName: 'mock' })
+      this.data = generateMockData(20)
+      console.log('Mock module was initialized')
+    }
+
+    async create(data: IMock) {
+      const elem: WithId<IMock> = { _id: new ObjectId(), ...data }
+      this.data.push(elem)
+      return elem
+    }
+
+    async getAll() {
+      return this.data
+    }
+
+    async getOnce(id: string) {
+      const elem = this.data.find((el) => el._id.toString() === id)
+      return elem
+    }
+
+    async update(id: string, data: Partial<IMock>) {
+      const idx = this.data.findIndex((el) => el._id.toString() === id)
+      if (idx !== -1) {
+        const updated = {
+          ...this.data[idx],
+          ...data,
+        }
+        this.data[idx] = updated
+        return updated
+      }
+      return null
+    }
+
+    async delete(id: string) {
+      const idx = this.data.findIndex((el) => el._id.toString() === id)
+      if (idx !== -1) {
+        this.data.splice(idx, 1)
+        return this.data[idx]
+      }
+      return null
+    }
+  }
+
+  const mockService = new MockService()
+
+  export default mockService
