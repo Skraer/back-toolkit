@@ -3,7 +3,7 @@ variables:
   withMongo: |
     class {{P}}Service extends ServiceWithMongo<I{{P}}> {
       constructor() {
-        super({ collectionName: '{{L}}' })
+        super({ collectionName: '{{C}}' })
       }
   withoutMongo: |
     class {{P}}Service {
