@@ -15,6 +15,7 @@ content: |
     NOT_SPECIFIED_ACCESS_TOKEN,
     BAD_CREDENTIALS,
     FORBIDDEN,
+    INVALID_ID,
   }
 
   type CustomErrorDictionaryType = {
@@ -40,6 +41,7 @@ content: |
     { id: ERRORS.NOT_SPECIFIED_ACCESS_TOKEN, message: 'Access token is not specified', status: 401 },
     { id: ERRORS.BAD_CREDENTIALS, message: 'Invalid login or password', status: 403 },
     { id: ERRORS.FORBIDDEN, message: 'Forbidden', status: 403 },
+    { id: ERRORS.INVALID_ID, message: 'Invalid ID', status: 500 },
   ]
 
   const dictionaryMap = new Map<ERRORS, CustomErrorDictionaryType>()

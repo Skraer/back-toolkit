@@ -18,7 +18,6 @@ content: |
       }
 
       const decodedData = jwt.verify(token, SECRET_ACCESS_KEY) as TokenPayloadType
-      console.log('decodedData', decodedData)
 
       req.user = decodedData
       next()
