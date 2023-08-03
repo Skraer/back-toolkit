@@ -1,14 +1,19 @@
-# Commands
+# Commands (examples)
 
-`npx skraer-back-toolkit init` for initializing structure, installing packages, adding scripts and some other  
+`npx skraer-back-toolkit init` for initializing structure, installing packages, adding scripts, adding mongo and auth services and some other  
+
+`npx skraer-back-toolkit appdir=__testdir do-something` - set directory for executing command do-something in script (appDir is 'src' by default)  
+`npx skraer-back-toolkit mdir parent-dir1/child-dir1 mdir parent-dir2/child-dir2` - makes directories in app directory  
 
 `npx skraer-back-toolkit gen:c todo` - generate controller "TodoController"  
 `npx skraer-back-toolkit gen:m todo` - generate model "Todo"  
 `npx skraer-back-toolkit gen:s todo` - generate service "TodoService"  
-`npx skraer-back-toolkit gen:s:c:m todo` - generate full module "todo"  
 `npx skraer-back-toolkit gen:mw todo` - generate middleware "TodoMiddleware"  
-`npx skraer-back-toolkit modules:mongo` - generate mongo module (service and model)  
+`npx skraer-back-toolkit gen:s:c:m:mw todo` - generate full module "todo"  
+`npx skraer-back-toolkit modules:mock` - generate mock crud module (for testing maybe)  
 `npx skraer-back-toolkit modules:3rdparty` - generate 3rd party request module (only service at now)  
+
+`npx skraer-back-toolkit secret` - refresh secret keys in app config  
 
 You can generate multiple elements in one go:  
 `npx skraer-back-toolkit gen:s:c todo1 gen:s:c todo2` - generate service and controller for modules "todo1" and "todo2"  
